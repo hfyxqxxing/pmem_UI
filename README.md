@@ -2,10 +2,10 @@
 Install the rpma that apply RDMA method on pmem. Use fio to test the performance of the program. ***Please install the mellanox drivers and pmem drivers correctly before this installation.***
 ## Environment
 
-**System:** Fedora 31
-**Kernel:** 5.3.7-301.fc31.x86_64
-**Hardware:** pmem, RNIC
-**Software:** rpma, fio, ipmctl, ndctl ... (Enough softwares to support pmem and RNIC)
+**System:** Fedora 31  
+**Kernel:** 5.3.7-301.fc31.x86_64  
+**Hardware:** pmem, RNIC  
+**Software:** rpma, fio, ipmctl, ndctl ... (Enough softwares to support pmem and RNIC)  
 
 ## Requirements
 
