@@ -13,12 +13,7 @@ Please go to https://github.com/pmem/rpma/blob/master/INSTALL.md for rpma and  h
 
 **rpma:**
 
-	$ yum -y install cmake pkg-config libibverbs-devel librdmacm-devel libcmocka-devel libpmem-devel libprotobuf-c-devel
-	$ git clone https://github.com/pmem/rpma
-	$ cd rpma && mkdir build && cd build
-	$ cmake ..
-	$ make -j
-	$ make install
+'''$ yum -y install cmake pkg-config libibverbs-devel librdmacm-devel libcmocka-devel libpmem-devel libprotobuf-c-devel; \n $ git clone https://github.com/pmem/rpma; \n $ cd rpma && mkdir build && cd build; \n $ cmake ..; \n $ make -j; \n $ make install'''
 
 **fio:**
 
