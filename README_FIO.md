@@ -1,9 +1,9 @@
 
 ---
-title: Installation of RPMA FIO
-author:  
-layout: post
-identifier: librpma(?)
+title: Installation of RPMA FIO  
+author:  me  
+layout: post  
+identifier: librpma(?)  
 ---
 
 # Introduction
