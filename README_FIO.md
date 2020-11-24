@@ -1,4 +1,13 @@
-# Fio for RPMA Installation
+
+---
+title: Installation of RPMA FIO
+author:  
+layout: post
+identifier: librpma(?)
+---
+
+# Introduction
+
 Install the rpma that apply RDMA method on pmem. Use fio to test the performance of the program. ***Please install the mellanox drivers and pmem drivers correctly before this installation.***
 ## Environment
 
