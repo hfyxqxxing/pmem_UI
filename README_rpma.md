@@ -5,7 +5,6 @@
 **System:** Fedora 31  
 **Kernel:** 5.3.7-301.fc31.x86_64  
 **Hardware:** Mellanox Technologies MT28908 Family  ConnectX-6 200Gb  
-~~PCIe3.0/4.0~~  
 **software:** MLNX_OFED_LINUX-5.1-2.5.8.0-fc31-x86_64.iso
 
 ## Hardware Setup
