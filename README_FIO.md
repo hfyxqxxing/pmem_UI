@@ -2,7 +2,7 @@
 title: Installation of RPMA FIO
 author: hfyxqxxing
 layout: post
-identifier: librpma(?)
+identifier: librpma
 ---
 
 
