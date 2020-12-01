@@ -1,0 +1,4 @@
+server: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_server, iodepth=1
+fio-3.23-152-g80490
+Starting 1 thread
+server: Laying out IO file (1 file / 95MiB)

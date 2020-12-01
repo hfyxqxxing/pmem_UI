@@ -1,0 +1,15 @@
+client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_client, iodepth=8
+...
+fio-3.23-152-g80490
+Starting 8 threads
+fio: pid=122718, err=-100000/
+fio: pid=122715, err=-100000/
+fio: pid=122716, err=-100000/
+fio: pid=122719, err=-100000/
+fio: pid=122720, err=-100000/
+fio: pid=122721, err=-100000/
+fio: pid=122722, err=-100000/
+fio: pid=122717, err=-100000/
+
+
+Run status group 0 (all jobs):

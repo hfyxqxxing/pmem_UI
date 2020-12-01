@@ -1,0 +1,4 @@
+client:rw=read,iodepth=8
+client:jobs=4):2020
+BW=11.9GiB/s
+lat(usec):avg=9.97,

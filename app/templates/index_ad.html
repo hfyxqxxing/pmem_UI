@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel's AEP observing system</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/default.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+</head>
+
+<body>
+    <header id="Header">
+      <!--  <div class="htmleaf-header">
+            <h1>Intel's AEP monitor tool <span id="sys_mode"></span></h1>
+        </div> -->
+        <div class="server_info">
+            <div class="img">
+                <img src="../static/img/aep_socket.png"  height="227.6px" style="border:2px solid #3A3F44">
+            </div>
+            <div class="tab">
+                <table border="1">
+                    <tr>
+                        <td class="td_title">CPU(s)</td>
+                        <td class="td_info">80</td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Socket(s)</td>
+                        <td class="td_info">2</td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Thread(s) per core</td>
+                        <td class="td_info">2</td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">Core(s) per socket</td>
+                        <td class="td_info">20</td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">NUMA node0 CPU(s)</td>
+                        <td class="td_info">0-19,40-59</td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">NUMA node1 CPU(s)</td>
+                        <td class="td_info">20-39, 60-79</td>
+                    </tr>
+                    <!-- <tr>
+                        <td class="td_title">DRAM</td>
+                        <td class="td_info">16GB*12</td>
+                    </tr>
+                    <tr>
+                        <td class="td_title">AEP</td>
+                        <td class="td_info">128GB*8</td>
+                    </tr> -->
+                </table>
+            </div>
+        </div>
+        <div class="Preview">
+            <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
+                data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
+                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="Socket0_DRAM"
+                data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
+                data-animationstep="0"></div>
+            <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-bind="gaugeValue: Percent" data-text=null
+                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
+                data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
+                data-prelabel="Socket0_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
+                data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
+            <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-bind="gaugeValue: Percent" data-prepend=null
+                data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
+                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="Socket1_DRAM"
+                data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
+                data-animationstep="0"></div>
+            <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-bind="gaugeValue: Percent" data-text=null
+                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
+                data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
+                data-prelabel="Socket1_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
+                data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
+        </div>
+        <div id="charts">
+            <div id="chart_qps">               
+            </div>
+            <div id="container"></div>
+        </div>
+
+    </header>
+
+    <script src="../static/js/jquery-2.1.1.min.js"></script>
+    <script src="../static/js/GaugeMeter.js"></script>
+    <script src="../static/js/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="../static/js/instance_info.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            $.ajax({
+                url: "/flush",
+                success: function(data){
+                    console.log("cool")
+                }
+            });
+        };
+        </script>
+</body>
+
+</html>

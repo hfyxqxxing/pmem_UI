@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel's AEP observing system</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/default.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+</head>
+
+<body>
+    <header id="Header">
+        <div class="htmleaf-header">
+            <h1>Intel's AEP monitor tool <span id="sys_mode"></span></h1>
+        </div>
+        <div class="Preview">
+            <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
+                data-append="%" data-size="256" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors="1"
+                data-animate_text_colors="1" data-width="6" data-prelabel="Socket0_DRAM" data-label_color="#FFF" data-postlabel_color="#FFF"
+                data-animationstep="0"></div>
+            <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-bind="gaugeValue: Percent" data-text=null
+                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FBFFED"
+                data-back="#2C94E0" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
+                data-prelabel="Socket0_AEP" data-label_color="#FFF" data-postlabel_color="#FFF" data-stripe=null data-animationstep="0"></div>
+            <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-bind="gaugeValue: Percent" data-prepend=null
+                data-append="%" data-size="256" data-theme="White" data-back="RGBa(0,0,0,.1)" data-animate_gauge_colors="1"
+                data-animate_text_colors="1" data-width="6" data-prelabel="Socket1_DRAM" data-label_color="#FFF" data-postlabel_color="#FFF"
+                data-animationstep="0"></div>
+            <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-bind="gaugeValue: Percent" data-text=null
+                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FBFFED"
+                data-back="#2C94E0" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
+                data-prelabel="Socket1_AEP" data-label_color="#FFF" data-postlabel_color="#FFF"  data-stripe=null data-animationstep="0"></div>
+        </div>
+
+        <div id="container"></div>
+    </header>
+
+    <script src="../static/js/jquery-2.1.1.min.js"></script>
+	<script src="../static/js/GaugeMeter.js"></script>
+	<script src="../static/js/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script>
+        $(document).ready(function () {
+            
+            $.ajax({
+                url: "/mode_info",
+                success: function (data) {
+                    document.getElementById("sys_mode").innerText = data;
+                }
+            });
+
+
+            //GaugeMeter
+            $(".GaugeMeter").gaugeMeter();
+
+            //Format Code
+            $("pre.Code").html(function (index, html) {
+                return html.replace(/^(.*)$/mg, "<span class='Line'>$1</span>")
+            });
+
+            //Sticky Table Header
+            var tables = $("table.StickyHeader");
+            tables.each(function (i) {
+                var table = tables[i];
+                var theadClone = $(table).find("thead").clone(true);
+                var stickyHeader = $("<div></div>").addClass("StickyHeader Hide");
+                stickyHeader.append($("<table></table")).find("table").append(theadClone);
+                $(table).after(stickyHeader);
+
+                var tableHeight = $(table).height();
+                var tableWidth = $(table).width() + Number($(table).css("padding-left").replace(/px/ig,
+                    "")) + Number($(table).css("padding-right").replace(/px/ig, "")) + Number($(
+                    table).css("border-left-width").replace(/px/ig, "")) + Number($(table).css(
+                    "border-right-width").replace(/px/ig, ""));
+
+                var headerCells = $(table).find("thead th");
+                var headerCellHeight = $(headerCells[0]).height();
+
+                var no_fixed_support = false;
+                if (stickyHeader.css("position") == "Absolute") {
+                    no_fixed_support = true;
+                }
+
+                var stickyHeaderCells = stickyHeader.find("th");
+                stickyHeader.css("width", "100%");
+
+                var cellWidth = $(headerCells[0]).width() + 1;
+                $(stickyHeaderCells[0]).attr("style", "width:" + cellWidth + "px !important");
+
+                var cutoffTop = $(table).offset().top;
+                var cutoffBottom = tableHeight + cutoffTop - headerCellHeight;
+
+                $(window).scroll(function () {
+                    var currentPosition = $(window).scrollTop();
+                    if (currentPosition > cutoffTop && currentPosition < cutoffBottom) {
+                        stickyHeader.removeClass("Hide");
+                        if (no_fixed_support) {
+                            stickyHeader.css("top", currentPosition + "px");
+                        }
+                    } else {
+                        stickyHeader.addClass("Hide");
+                    }
+                });
+            });
+
+
+            function memory() {
+                $.ajax({
+                    url: "/memory_info",
+                    //    data:data,
+                    success: function (data) {
+                        for (var i = 0; i < 4; i++) {
+                            var b = document.getElementById("PreviewGaugeMeter_" + i)
+                                .getElementsByTagName("b");
+                            console.log(b)
+                            b[1].innerText = "Total:"+(data[0][i]/1024).toFixed(2)+"G"
+                            b[2].innerText = "Used:"+((data[0][i]-data[1][i])/1024).toFixed(2)+"G"
+                            $("#PreviewGaugeMeter_" + i).gaugeMeter({
+                                percent: data[2][i]
+                            });
+                        }
+                    }
+                });
+                //    setTimeout(time,1000);
+            }
+
+            setInterval(memory, 1000);
+            var dataMax=0;
+            function getredis(){
+                var redis_data;
+                $.ajax({
+                    url: "/redis_info",
+                    async: false,
+                    success: function (data) {
+                        redis_data=data[3];
+                    }
+                });
+                return redis_data;
+            }
+
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line',
+                    // backgroundColor:'#058DC7',
+                    animation: Highcharts.svg
+                    marginRight: 10,
+                    events: {
+                        load: function () {
+                            // set up the updating of the chart each second
+                            var series = this.series[0];
+                            setInterval(function () {
+                                var x = (new Date()).getTime(), // current time
+                                    y = getredis();
+                                console.log(y);
+                                series.addPoint([x, y], true, true); //实际数据
+                            }, 1000);
+                        }
+                    }
+                },
+
+                credits: {
+                    enabled: false
+                },
+
+                time: {
+                    useUTC: false
+                },
+
+                title: {
+                    text: 'QPS'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150
+                },
+                yAxis: {
+                   // max:getredis(),
+                   // min:0,
+                    title: {
+                        text: 'QPS'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }],
+                    
+                    tickPositioner: function () {
+                        var positions = [],
+                            tick = 0,
+                            max = 0;
+                        dataMax=getredis();
+                       // console.log(max);
+                        console.log(dataMax);
+                        //当最大值大于30时，刻度线以50的倍数增加，当小于30时，刻度线以5的倍数增加
+                        if (dataMax <= 1000&&dataMax>max) {
+                           // max = (Math.floor(dataMax / 100) + 1) * 100;
+                           max=1000;
+
+                        } else if(dataMax >1000&&dataMax <=10000&&dataMax>max){
+                           // max = (Math.floor(dataMax / 1000+1)) * 1000;     
+                          max=10000;                       
+                        }else if(dataMax >10000&&dataMax>max){
+                            max = (Math.floor(dataMax / 10000+1)) * 10000;                          
+                        }
+                        //步长为5，y轴固定划分为5个刻度区间
+                        increment = Math.ceil(max / 5);
+                        for (tick; tick <= max; tick += increment) {
+                            positions.push(tick);
+                        }
+                        return positions;
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br/>',
+                    pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+                },
+                legend: {
+                    enabled: false
+                }, //图例
+                exporting: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Random data',
+                    data: (function () {
+                        // generate an array of random data
+                        var data = [],
+                            time = (new Date()).getTime(),
+                            i;
+
+                        for (i = -19; i <= 0; i += 1) {
+                            data.push({
+                                x: time + i * 1000,
+                                y: getredis()
+                            });
+                        } //开始前状态
+                        console.log(data);
+                        return data;
+                    }())
+                }]
+            });
+
+        });
+    </script>
+</body>
+
+</html>

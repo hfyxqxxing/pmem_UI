@@ -1,0 +1,7 @@
+client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_client, iodepth=8
+fio-3.23-152-g80490
+Starting 1 thread
+fio: pid=136896, err=-100002/file:engines/librpma.c:164, func=rpma_utils_get_ibv_context, error=Provider error occurred
+
+
+Run status group 0 (all jobs):

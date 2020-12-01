@@ -1,0 +1,22 @@
+client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_client, iodepth=8
+...
+fio-3.23-152-g80490
+Starting 24 threads
+
+client: (groupid=0, jobs=24): err= 0: pid=76770: Sun Sep 20 23:04:32 2020
+  read: IOPS=3376k, BW=12.9GiB/s (13.8GB/s)(386GiB/30000msec)
+    slat (nsec): min=95, max=1014.9k, avg=294.36, stdev=281.17
+     lat (usec): min=2, max=1076, avg=56.45, stdev=11.99
+    lat percentiles (usec):
+     | 99.900th=[  106], 99.990th=[  112], 99.999th=[  120]
+   bw (  MiB/s): min=13159, max=13234, per=100.00%, avg=13194.31, stdev= 0.66, samples=1416
+   iops        : min=3368711, max=3388156, avg=3377742.47, stdev=168.79, samples=1416
+  cpu          : usr=20.71%, sys=5.28%, ctx=13570000, majf=0, minf=2390
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=100.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=50.0%, 4=50.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.1%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=101277439,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=8
+
+Run status group 0 (all jobs):
+   READ: bw=12.9GiB/s (13.8GB/s), 12.9GiB/s-12.9GiB/s (13.8GB/s-13.8GB/s), io=386GiB (415GB), run=30000-30000msec

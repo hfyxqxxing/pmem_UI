@@ -1,0 +1,20 @@
+server: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_server, iodepth=1
+fio-3.23-152-g80490
+Starting 1 thread
+server: Laying out IO file (1 file / 95MiB)
+
+server: (groupid=0, jobs=1): err= 0: pid=56903: Mon Nov 30 14:29:24 2020
+  read: IOPS=0, BW=359KiB/s (368kB/s)(13.5MiB/38593msec)
+  cpu          : usr=0.00%, sys=1.02%, ctx=369, majf=0, minf=293047
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=1,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=12
+
+Run status group 0 (all jobs):
+   READ: bw=359KiB/s (368kB/s), 359KiB/s-359KiB/s (368kB/s-368kB/s), io=13.5MiB (14.2MB), run=38593-38593msec
+
+Disk stats (read/write):
+    dm-1: ios=0/1274, merge=0/0, ticks=0/1883, in_queue=1883, util=0.27%, aggrios=0/1271, aggrmerge=0/3, aggrticks=0/1775, aggrin_queue=1383, aggrutil=0.27%
+  nvme1n1: ios=0/1271, merge=0/3, ticks=0/1775, in_queue=1383, util=0.27%
