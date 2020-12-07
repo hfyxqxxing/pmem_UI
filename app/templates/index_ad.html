@@ -25,27 +25,27 @@
                 <table border="1">
                     <tr>
                         <td class="td_title">CPU(s)</td>
-                        <td class="td_info">80</td>
+                        <td class="td_info">{{sys_info.cpu}}</td>
                     </tr>
                     <tr>
                         <td class="td_title">Socket(s)</td>
-                        <td class="td_info">2</td>
+                        <td class="td_info">{{sys_info.sockets}}</td>
                     </tr>
                     <tr>
                         <td class="td_title">Thread(s) per core</td>
-                        <td class="td_info">2</td>
+                        <td class="td_info">{{sys_info.threads}}</td>
                     </tr>
                     <tr>
                         <td class="td_title">Core(s) per socket</td>
-                        <td class="td_info">20</td>
+                        <td class="td_info">{{sys_info.cores}}</td>
                     </tr>
                     <tr>
                         <td class="td_title">NUMA node0 CPU(s)</td>
-                        <td class="td_info">0-19,40-59</td>
+                        <td class="td_info">{{sys_info.node0}}</td>
                     </tr>
                     <tr>
                         <td class="td_title">NUMA node1 CPU(s)</td>
-                        <td class="td_info">20-39, 60-79</td>
+                        <td class="td_info">{{sys_info.node0}}</td>
                     </tr>
                     <!-- <tr>
                         <td class="td_title">DRAM</td>
@@ -80,13 +80,30 @@
                 data-prelabel="Socket1_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
                 data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
         </div>
+                        
+        
+        <div>
+            <form action="/selection"  method="POST">
+                <button class="button" name="mode" type ="submit" value="sync_read_rpma">Sync_Read_RPMA</button>
+                <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="sync_write_rpma">Sync_Write_RPMA</button>
+                <button class="button" style="color: #f7a35c;"  name="mode" type ="submit" value="async_read_rpma">Async_Read_RPMA</button>
+                <button class="button" style="color: #8085e9;"  name="mode" type ="submit" value="async_write_rpma">Async_Write_RPMA</button>
+
+                <!-- <button class="button" style="color: #f15c80;"  name="mode" type ="submit" value="rdma">RDMA</button> -->
+            </form>
+            
+        </div>
+
+
         <div id="charts">
             <div id="chart_qps">               
             </div>
             <div id="container"></div>
         </div>
 
+
     </header>
+
 
     <script src="../static/js/jquery-2.1.1.min.js"></script>
     <script src="../static/js/GaugeMeter.js"></script>
@@ -95,14 +112,6 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="../static/js/instance_info.js"></script>
     <script type="text/javascript">
-        window.onload = function(){
-            $.ajax({
-                url: "/flush",
-                success: function(data){
-                    console.log("cool")
-                }
-            });
-        };
         </script>
 </body>
 

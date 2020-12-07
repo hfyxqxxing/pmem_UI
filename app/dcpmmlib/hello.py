@@ -36,9 +36,23 @@ import threading
 # 读rdma测试结果
 
 
-haha = os.popen("lscpu | grep 'CPU(s):' | awk '{print $2} '").readlines()[0];
+haha = os.popen("lscpu | grep 'CPU(s):' | awk '{print $2} '").readlines()[0].split('\n')[0];
 print(haha)
 path="/home/xiaoran/fio/rdma_test_results/"
+
+hehe = os.popen("lscpu | grep 'Socket(s):' | awk '{print $2} '").readlines()[0].split('\n')[0]
+print(hehe)
+
+Threads = os.popen("lscpu | grep 'Thread(s) per core:' | awk '{print $4}'").readlines()[0].split('\n')[0];
+print(Threads)
+
+cores = os.popen("lscpu | grep 'Core(s) per socket:' | awk '{print $4}'").readlines()[0].split('\n')[0];
+print(cores)
+
+node0 = os.popen("lscpu | grep 'NUMA node0 CPU(s):' | awk '{print $4}'").readlines()[0].split('\n')[0];
+node1 = os.popen("lscpu | grep 'NUMA node1 CPU(s):' | awk '{print $4}'").readlines()[0].split('\n')[0];
+print(node0)
+print(node1)
 
 name = "result_"+str(1)+".log"
 f = open(path+name,'r')

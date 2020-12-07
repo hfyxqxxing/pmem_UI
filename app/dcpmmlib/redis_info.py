@@ -81,22 +81,68 @@ def get_current_commands(r):
           # print('start_commands', last_commands);
 
 
-def get_data(click):
+def get_data(click,mode):
    values = [];
 
    a = [1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40]
-   print(len(a))
    if (click > 20 ):
       click = 20
-   name = "result_"+str(a[click])+".log"
+   
+   number = a[click]
+
+   name = "result_"+str(number)+".log"
+
+   path_1="/home/xiaoran/fio/examples/sync_read_results/"
+   path_2="/home/xiaoran/fio/examples/sync_write_results/"
+   path_3="/home/xiaoran/fio/examples/async_read_results/"
+   path_4="/home/xiaoran/fio/examples/async_write_results/"
+
+   if (mode == "sync_read_rpma"):
+      value = get_data_sync_read_rpma(number)
+   elif (mode == "sync_write_rpma"):
+      value = get_data_sync_write_rpma(number)
+   elif (mode == "async_read_rpma"):
+      value = get_data_async_read_rpma(number)
+   elif (mode == "async_write_rpma"):
+      value = get_data_async_write_rpma(number)
+   elif (mode == "default"):
+      if (os.path.exists(path_1+name) and os.path.exists(path_2+name) 
+      and os.path.exists(path_3+name) and os.path.exists(path_4+name)):
+         value_1 = get_data_sync_read_rpma(number)
+         value_2 = get_data_sync_write_rpma(number)
+         value_3 = get_data_async_read_rpma(number)
+         value_4 = get_data_async_write_rpma(number)
+         values.append(value_1)
+         values.append(value_2)
+         values.append(value_3)
+         values.append(value_4)
+         return values
+      else:
+         return values
+   else:
+      return values
+   
+   #不是空值才加入values，空值values不会加点
+   if (not value):
+      print("ma le")
+      return(values)
+   else:
+      values.append(value)
+      return values
+
+
+
+
+#应该写成均返回得是value_one,单个字典值。
+def get_data_sync_read_rpma(number):
+
+   name = "result_"+str(number)+".log"
    print(name)
-   condition = True
    value_one = {}
-   path="/home/xiaoran/ui_pmem/pmem_demo/app/shell/"
-   path_2="/home/xiaoran/fio/rdma_test_results/"
+   path="/home/xiaoran/fio/examples/sync_read_results/"
 
 
-   if (os.path.exists(path+name) and os.path.exists(path_2+name)):
+   if (os.path.exists(path+name)):
 
       # line 1
       f = open(path+name,'r')
@@ -104,7 +150,7 @@ def get_data(click):
       if (len(lines) < 2):
          return values
       str1 = lines[2]
-      print(str1)
+
       pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
       pattern2 = re.compile('MiB/s|GiB/s')
       # print(pattern.findall(str1))
@@ -115,58 +161,122 @@ def get_data(click):
          width = round(float(width[0]) / 1074 ,2 )
       else:
          width = round(float(width[0]),2)
-      print(width)
-      value_one["bw"] = [a[click],width]
-
-      # line 2 
-      f = open(path_2+name,'r')
-      lines = f.readlines()
-
-      bw = lines[2].split()[3]
-      print("this is ", bw)
-   
-      if (float(bw) > 100.0):
-         width_2 = round(float(bw) / 1074 ,2 )
-      else:
-         width_2 = round(float(bw),2)
-      print(width_2)
-
-      value_one["rdma"] = [a[click],width_2]
-
+      print("BW is :",width)
+      value_one["sync_read_rpma"] = [number,width]
       
-      values.append(value_one)
-      condition = False
    else:
       print("shuile")
-      return values
+      return value_one
    
-   #不知valueone重复加入会如何，还是应该有value two来读第二条线
-   #还有就是两个while的顺序问题
+   return value_one
+
+def get_data_sync_write_rpma(number):
+
+   name = "result_"+str(number)+".log"
+   print(name)
+   value_one = {}
+   path="/home/xiaoran/fio/examples/sync_write_results/"
 
 
-      # path="/home/xiaoran/fio/rdma_test_results/"
-      # if (os.path.exists(path+name)):
-      #    f = open(path+name,'r')
-      #    lines = f.readlines()
-      #    bw = lines[2].split()
-      #    if (float(bw) > 100.0):
-      #       width = round(float(bw) / 1074 ,2 )
-      #    else:
-      #       width = round(float(bw),2)
-      #    print(width)
-      #    value["rdma"] = [a[click],width]
-      #    values.update(value_one)
-      # else:
-      #    print("kunle")
-      #    return values
-   return values;
+   if (os.path.exists(path+name)):
+
+      # line 1
+      f = open(path+name,'r')
+      lines = f.readlines()
+      if (len(lines) < 2):
+         return values
+      str1 = lines[2]
+
+      pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
+      pattern2 = re.compile('MiB/s|GiB/s')
+      # print(pattern.findall(str1))
+      # print(pattern2.findall(str1))
+      width = pattern.findall(str1)
+      unit = pattern2.findall(str1)
+      if (unit[0] == "MiB/s"):
+         width = round(float(width[0]) / 1074 ,2 )
+      else:
+         width = round(float(width[0]),2)
+      print("BW is :",width)
+      value_one["sync_write_rpma"] = [number,width]
+      
+   else:
+      print("maa le")
+      return value_one
+   
+   return value_one
+
+def get_data_async_read_rpma(number):
+
+   name = "result_"+str(number)+".log"
+   print(name)
+   value_one = {}
+   path="/home/xiaoran/fio/examples/async_read_results/"
 
 
+   if (os.path.exists(path+name)):
+
+      # line 1
+      f = open(path+name,'r')
+      lines = f.readlines()
+      if (len(lines) < 2):
+         return values
+      str1 = lines[2]
+
+      pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
+      pattern2 = re.compile('MiB/s|GiB/s')
+      # print(pattern.findall(str1))
+      # print(pattern2.findall(str1))
+      width = pattern.findall(str1)
+      unit = pattern2.findall(str1)
+      if (unit[0] == "MiB/s"):
+         width = round(float(width[0]) / 1074 ,2 )
+      else:
+         width = round(float(width[0]),2)
+      print("BW is :",width)
+      value_one["async_read_rpma"] = [number,width]
+      
+   else:
+      print("maaa le")
+      return value_one
+   
+   return value_one
 
 
-# if __name__=="__main__":
-#     # r = redis.Redis(host='localhost', port=6379, decode_responses=True)
-#     # get_current_commands(r);
-#      get_current_info();
-#     # timer = threading.Timer(1.0 , get_current_info)
-#     # timer.start()
+def get_data_async_write_rpma(number):
+
+   name = "result_"+str(number)+".log"
+   print(name)
+   value_one = {}
+   path="/home/xiaoran/fio/examples/async_write_results/"
+
+
+   if (os.path.exists(path+name)):
+
+      # line 1
+      f = open(path+name,'r')
+      lines = f.readlines()
+      if (len(lines) < 2):
+         return values
+      str1 = lines[2]
+
+      pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
+      pattern2 = re.compile('MiB/s|GiB/s')
+      # print(pattern.findall(str1))
+      # print(pattern2.findall(str1))
+      width = pattern.findall(str1)
+      unit = pattern2.findall(str1)
+      if (unit[0] == "MiB/s"):
+         width = round(float(width[0]) / 1074 ,2 )
+      else:
+         width = round(float(width[0]),2)
+      print("BW is :",width)
+      value_one["async_write_rpma"] = [number,width]
+      
+   else:
+      print("maaaa le")
+      return value_one
+   
+   return value_one
+
+

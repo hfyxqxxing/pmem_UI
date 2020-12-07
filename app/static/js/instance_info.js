@@ -1,6 +1,44 @@
+
+var mode = "default"
+
+// window.onload = function(){
+//     $.ajax({
+//         url: "/flush",
+//         async: false,
+//         success: function(data){
+//             console.log("flush")
+//             mode = data
+//             console.log(mode);
+            
+//         }
+//     });
+// };
+
 $(document).ready(function () {
+    $.ajax({
+        url: "/flush",
+        async: false,
+        success: function(data){
+            console.log("flush")
+            mode = data
+            console.log(mode);
+            
+        }
+    });
+
+    $.ajax({
+            url:"/moding",
+            async:false,
+            dataType: "Text",
+            success: function(data){mode = data}
+        })
+
+    console.log("reall change", mode)
+
     //GaugeMeter
     $(".GaugeMeter").gaugeMeter();
+
+
 
     //Format Code
     $("pre.Code").html(function (index, html) {
@@ -120,44 +158,101 @@ $(document).ready(function () {
 
 
     function createdata() {
-        // if (series.length==0){
-            
-        // }
+
+        // 通过mode判断数据线名称，格子都是一个。
         var series = new Array();
         var seriesdata = new Array();
+        var rpma_modes=["sync_read_rpma","sync_write_rpma","async_read_rpma","async_write_rpma"]
 
+        var names = {"sync_read_rpma":"S.R.P.",
+        "sync_write_rpma":"S.W.P",
+        "async_read_rpma":"A.R.P",
+        "async_write_rpma":"A.W.P"}
 
-        var names = ["BW-RPMA","BW-RDMA"];
-        var data = [];
-        var t = 0;  
-        var instance = [[0],[0]];
-        for (var j = 0; j < instance.length; j++) {
-            data.push({
-                x: t,
-                y: instance[j][0]
-            });
-        }
-        console.log("here")
-        console.log(data);
-        seriesdata.push(data);
-
-        var seriesdatas = JSON.parse(JSON.stringify(seriesdata)) //deep copy
-        for (m = 0; m < seriesdatas[0].length; m++) {
-            var instance_data = [];
-            var temp = []
-            for (var n = 0; n < seriesdatas.length; n++) {
-                temp.push(seriesdatas[n][m]);
+        var colors = {"sync_read_rpma":"#7cb5ec",
+        "sync_write_rpma":"#90ed7d",
+        "async_read_rpma":"#f7a35c",
+        "async_write_rpma":"#8085e9"}
+        console.log(mode)
+        if (mode=="default"){
+            var data = [];
+            if (mode)
+            var x0 = 0;
+            var y0 = [];
+            for (var s = 0; s < rpma_modes.length; s++){
+                item = [0];
+                y0.push(item);
             }
-            instance_data["name"] = names[m];
-            instance_data["data"] = temp;
-            series.push(instance_data);
+            for (var i = 0; i < y0.length; i++) {
+                data.push({
+                    x: x0,
+                    y: y0[i][0]
+                });
+            }
+            console.log("here")
+            console.log(data);
+    
+            seriesdata.push(data);
+            var seriesdatas = JSON.parse(JSON.stringify(seriesdata)) //deep copy
+            // m = 0,1,2,3
+            for (m = 0; m < seriesdatas[0].length; m++) {
+                var instance_data = [];
+                var temp = []
+                // n = 0
+                for (var n = 0; n < seriesdatas.length; n++) {
+                    temp.push(seriesdatas[n][m]);
+                }
+                instance_data["name"] = names[rpma_modes[m]];
+                instance_data["data"] = temp;
+                instance_data["color"] = colors[rpma_modes[m]]
+                series.push(instance_data);
+            }
+            if (series.length!=0) {
+                return series;
+            } else {
+                return [{}];
+            }
+            
         }
-       // return series;   
-        if (series.length!=0) {
-            return series;
-        } else {
-            return [{}];
-        }
+        else{
+            console.log("come to ",mode)
+            var data = [];
+            if (mode)
+            var x0 = 0;
+            var y0 = [[0]];
+            for (var i = 0; i < y0.length; i++) {
+                data.push({
+                    x: x0,
+                    y: y0[i][0]
+                });
+            }
+            console.log("here")
+            console.log(data);
+    
+            seriesdata.push(data);
+            var seriesdatas = JSON.parse(JSON.stringify(seriesdata)) //deep copy
+            // m = 0
+            for (m = 0; m < seriesdatas[0].length; m++) {
+                var instance_data = [];
+                var temp = []
+                for (var n = 0; n < seriesdatas.length; n++) {
+                    temp.push(seriesdatas[n][m]);
+                }
+                instance_data["name"] = names[mode];
+                instance_data["data"] = temp;
+                instance_data["color"] = colors[mode];
+                series.push(instance_data);
+            }
+            if (series.length!=0) {
+                return series;
+            } else {
+                return [{}];
+            }
+            
+        } 
+
+
+
     }
 
     function getredis() {
@@ -203,14 +298,15 @@ $(document).ready(function () {
         global: {
             useUTC: false
         },
-        colors:['#7cb5ec', '#90ed7d']
+        colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9', 
+        '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'] 
     });
 
     function qps_chart() {
         qps_chart_flag=true;
-        clearInterval(qps_interval);
+        clearInterval(qps_interval);   
 
-        Highcharts.chart('container', {
+        var what = Highcharts.chart('container', {
             chart: {
                 type: 'line',
                 backgroundColor: '#272B30',
@@ -220,36 +316,70 @@ $(document).ready(function () {
                 events: {
                     load: function () {
                         // set up the updating of the chart each second
-                        var series = this.series;
+                        var series = this.series
                         var loadData = function () {
                             $.ajax({
                                 url: "/redis_info",
                                 async: false,
                                 success: function (data) {
-                                    var names = ["bw","rdma"];
+                                    //首先是单个名字mode读取
+                                    var name = mode;
                                     console.log("times");
-                                    console.log(series)
-                                    if (data.length != 0 && series.length != 0) {
-                                       // qps_chart_flag=true;
-                                        var qps = 0;
-                                        for (var k = 0; k < series.length; k++) {
-                                            console.log("what is ",data[0][names[k]][0])
-                                            var x = data[0][names[k]][0]
-                                            var lastTime = 0;
-                                            if (series[k].data.length > 0) {
-                                                lastTime = series[k].data[
-                                                    series[k].data.length -
-                                                    1].x
-                                            }
-                                            if (x > lastTime) {
-                                                series[k].addPoint([x, data[0][names[k]][1]], true, false)
-                                            }
-                                            // qps += data[k]["bw"][1];
-                                            // console.log(qps)
-                                            console.log("length: ",series[0].length)
-                                        }
-                                        // document.getElementById("chart_qps").innerText = "average_bw: " + (qps / series[0].length).toFixed(2)+"\xa0\xa0\xa0" + "GiB/s";
+                                    console.log(series);
+
+                                    //然后是情况的考虑,default 多条
+                                    if (mode == "default"){
+                                        names = ["sync_read_rpma","sync_write_rpma","async_read_rpma","async_write_rpma"]
+                                        if (data.length != 0 && series.length != 0) {
+                                            // qps_chart_flag=true;
+                                             for (var k = 0; k < series.length; k++) {
+    
+                                                 //x ,data[0]是因为jsonify多加了一层不知道什么的嵌套
+                                                 //是个字典的集合，但是因为是字典的集合所以没有顺序没有名字？
+                                                 console.log("what is ",data[k][names[k]][0])
+                                                 var x = data[k][names[k]][0]
+                                                 var lastTime = 0;
+                                                 if (series[k].data.length > 0) {
+                                                     lastTime = series[k].data[
+                                                         series[k].data.length -
+                                                         1].x
+                                                 }
+                                                 if (x > lastTime) {
+                                                     //y
+                                                     series[k].addPoint([x, data[k][names[k]][1]], true, false)
+                                                 }
+                                                 // qps += data[k]["bw"][1];
+                                                 // console.log(qps)
+                                             }
+                                             // document.getElementById("chart_qps").innerText = "average_bw: " + (qps / series[0].length).toFixed(2)+"\xa0\xa0\xa0" + "GiB/s";
+                                         }
                                     }
+                                    else{
+                                        if (data.length != 0 && series.length != 0) {
+                                            // qps_chart_flag=true;
+                                             for (var k = 0; k < series.length; k++) {
+    
+                                                 //x 
+                                                 console.log("what is ",data[0])
+                                                 var x = data[0][name][0]
+                                                 var lastTime = 0;
+                                                 if (series[k].data.length > 0) {
+                                                     lastTime = series[k].data[
+                                                         series[k].data.length -
+                                                         1].x
+                                                 }
+                                                 if (x > lastTime) {
+                                                     //y
+                                                     series[k].addPoint([x, data[0][name][1]], true, false)
+                                                 }
+                                                 // qps += data[k]["bw"][1];
+                                                 // console.log(qps)
+                                             }
+                                             // document.getElementById("chart_qps").innerText = "average_bw: " + (qps / series[0].length).toFixed(2)+"\xa0\xa0\xa0" + "GiB/s";
+                                         }
+                                    }
+
+
                                 }
                             });
                         };
@@ -260,8 +390,6 @@ $(document).ready(function () {
             credits: {
                 enabled: false
             },
-
-            colors:['#058DC7', '#50B432'],
 
             time: {
                 useUTC: false
@@ -274,6 +402,7 @@ $(document).ready(function () {
                     fontSize: '20px',
                 }
             },
+
             xAxis: {
                 title: {
                     text: 'Threads',
@@ -356,8 +485,21 @@ $(document).ready(function () {
             exporting: {
                 enabled: false
             },
-            series: createdata()
+            series:createdata()
         });
+
+        // window.onload = function(){
+        //     $.ajax({
+        //         url: "/flush",
+        //         success: function(data){
+        //             console.log("flush")
+        //             mode = data
+        //             console.log(mode);
+        //             var them = what.series
+
+        //         }
+        //     });
+        // };
     }
 
    //  document.getElementById("stop-server").onclick=function(){
@@ -383,3 +525,5 @@ $(document).ready(function () {
 
 
 });
+
+

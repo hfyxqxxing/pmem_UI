@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request,session,current_app
+from flask import Flask, render_template, request,session,current_app, redirect, url_for
 from flask import jsonify
 
 from dcpmmlib.memory_info import DCPMM_Mode1;
@@ -16,21 +16,31 @@ import time
 app = Flask(__name__)
 
 
-
 app.secret_key = 'xxxxx'
+
+
 
 @app.before_first_request
 def before_first_request():
     session['click'] = 0
+    session['mode'] = "default"
     # g.username = 0
 
+
+@app.route('/moding')
+def show():
+    mode = session['mode']
+    print(mode)
+    return mode
 
 @app.route('/')
 def index():
     modes= DCPMM_Mode1();
     if modes=="AD_Mode" or modes=="Numa_Node":
+        sys_info = {}
         sys_info = get_sys_info()
-        return render_template('index_ad.html',sys_info);
+        # return 时命名该字典以被调用
+        return render_template('index_ad.html',sys_info=sys_info);
     elif modes=="2LM":
         return render_template('index_memory.html');
     elif modes=="1LM":
@@ -51,11 +61,25 @@ def load_mode():
    # memory =jsonify([10,20,30,40]);
     return mode;
 
+@app.route('/moding',methods=['GET','POST'])
+def the_mode():
+    print("man",session['mode'])
+
+    return session['mode']
+
+
 @app.route('/flush')
 def clear():
     session['click'] = 0
-    return "yes"
+    print("mode", session['mode'])
+    return session['mode']
 
+@app.route('/selection', methods=['GET','POST'])
+def one():
+
+    session['mode'] = request.form.get("mode")
+    print("go_to",session['mode'])
+    return redirect('/')
 
 @app.route('/memory_info')
 def load_memory():
@@ -66,10 +90,14 @@ def load_memory():
 @app.route('/redis_info')
 def load_redis():
     click = session['click']
-    print(click)
+    mode = session['mode']
+    print("click: ",click)
+    print("show mode: ",mode)
     if click == 0:
         time.sleep(3)
-    result = get_data(click)
+    result = get_data(click,mode)
+    if (click > 20 ):
+        click = 20
     redis = jsonify(result)
     if (len(result) != 0):
         print(len(result))
@@ -101,5 +129,5 @@ if __name__ == '__main__':
     # thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/test_results/./rpma_fio_sh',))
     # thread.start()
     # print("start")
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=3000,debug=True)
     before_first_request()

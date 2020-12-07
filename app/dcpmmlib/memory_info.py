@@ -4,8 +4,24 @@ import os, time
 
 
 def get_sys_info():
-   cpu_numbers = os.popen("lscpu | grep 'CPU(s):' | awk '{print $2} '").readlines()[0];
+   cpu_numbers = os.popen("lscpu | grep 'CPU(s):' | awk '{print $2} '").readlines()[0].split('\n')[0];
+   sockets = os.popen("lscpu | grep 'Socket(s):' | awk '{print $2} '").readlines()[0].split('\n')[0];
+   Threads = os.popen("lscpu | grep 'Thread(s) per core:' | awk '{print $4}'").readlines()[0].split('\n')[0];
+   cores = os.popen("lscpu | grep 'Core(s) per socket:' | awk '{print $4}'").readlines()[0].split('\n')[0];
+   node0 = os.popen("lscpu | grep 'NUMA node0 CPU(s):' | awk '{print $4}'").readlines()[0].split('\n')[0];
+   node1 = os.popen("lscpu | grep 'NUMA node1 CPU(s):' | awk '{print $4}'").readlines()[0].split('\n')[0];
 
+   sys_info = {}
+   sys_info["cpu"]=cpu_numbers
+   sys_info["sockets"]=sockets
+   sys_info["threads"]=Threads
+   sys_info["cores"]=cores
+   sys_info["node0"]=node0
+   sys_info["node1"]=node1
+
+   print(sys_info)
+   
+   return sys_info
 
 
 
