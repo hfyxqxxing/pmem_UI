@@ -1,14 +1,14 @@
 
-var mode = "default"
-var timesrun = 0
+var mode_rdma = "readss"
+
 // window.onload = function(){
 //     $.ajax({
 //         url: "/flush",
 //         async: false,
 //         success: function(data){
 //             console.log("flush")
-//             mode = data
-//             console.log(mode);
+//             mode_rdma = data
+//             console.log(mode_rdma);
             
 //         }
 //     });
@@ -20,173 +20,19 @@ $(document).ready(function () {
         async: false,
         success: function(data){
             console.log("flush")
-            console.log(mode);
             
         }
     });
 
     $.ajax({
-            url:"/moding",
+            url:"/moding_rdma",
             async:false,
             dataType: "Text",
-            success: function(data){mode = data}
+            success: function(data){mode_rdma = data}
         })
 
-    console.log("reall change", mode)
+    console.log("reall change rdma", mode_rdma)
 
-    //GaugeMeter
-    $(".GaugeMeter").gaugeMeter();
-
-
-
-    //Format Code
-    $("pre.Code").html(function (index, html) {
-        return html.replace(/^(.*)$/mg, "<span class='Line'>$1</span>")
-    });
-
-    //Sticky Table Header
-    var tables = $("table.StickyHeader");
-    tables.each(function (i) {
-        var table = tables[i];
-        var theadClone = $(table).find("thead").clone(true);
-        var stickyHeader = $("<div></div>").addClass("StickyHeader Hide");
-        stickyHeader.append($("<table></table")).find("table").append(theadClone);
-        $(table).after(stickyHeader);
-
-        var tableHeight = $(table).height();
-        var tableWidth = $(table).width() + Number($(table).css("padding-left").replace(/px/ig,
-            "")) + Number($(table).css("padding-right").replace(/px/ig, "")) + Number($(
-                table).css("border-left-width").replace(/px/ig, "")) + Number($(table).css(
-                    "border-right-width").replace(/px/ig, ""));
-
-        var headerCells = $(table).find("thead th");
-        var headerCellHeight = $(headerCells[0]).height();
-        var no_fixed_support = false;
-        if (stickyHeader.css("position") == "Absolute") {
-            no_fixed_support = true;
-        }
-
-        var stickyHeaderCells = stickyHeader.find("th");
-        stickyHeader.css("width", "100%");
-
-        var cellWidth = $(headerCells[0]).width() + 1;
-        $(stickyHeaderCells[0]).attr("style", "width:" + cellWidth + "px !important");
-
-        var cutoffTop = $(table).offset().top;
-        var cutoffBottom = tableHeight + cutoffTop - headerCellHeight;
-
-        $(window).scroll(function () {
-            var currentPosition = $(window).scrollTop();
-            if (currentPosition > cutoffTop && currentPosition < cutoffBottom) {
-                stickyHeader.removeClass("Hide");
-                if (no_fixed_support) {
-                    stickyHeader.css("top", currentPosition + "px");
-                }
-            } else {
-                stickyHeader.addClass("Hide");
-            }
-        });
-    });
-
-
-
-
-//    $.ajax({
-  //      url: "/mode_info",
-    //    success: function (data) {
-         //   document.getElementById("sys_mode").innerText = data;
-     //   }
- //   });
-
-    function memory() {
-        $.ajax({
-            url: "/memory_info",
-            success: function (data) {
-                var memory_num = 0;
-              //  var mode = document.getElementById("sys_mode").innerText;
-                var mode="1LM"
-                if (mode == "AD_Mode" || mode == "Numa_Node") {
-                    memory_num = 4;
-                } else {
-                    memory_num = 2;
-                }
-                if (mode == "Numa_Node") {
-                    var b = document.getElementById("PreviewGaugeMeter_" + 0).getElementsByTagName("b");
-                    b[1].innerText = "total:" + (data[0][0] / 1024).toFixed(2) + "G"
-                    b[2].innerText = "used:" + ((data[0][0] - data[1][0]) / 1024).toFixed(
-                        2) + "G"
-                    $("#PreviewGaugeMeter_" + 0).gaugeMeter({
-                        percent: data[2][0]
-                    });
-                    var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
-                    b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
-                    b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
-                        2) + "G"
-                    $("#PreviewGaugeMeter_" + 1).gaugeMeter({
-                        percent: data[2][2]
-                    });
-                    var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
-                    b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
-                    b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
-                        2) + "G"
-                    $("#PreviewGaugeMeter_" + 2).gaugeMeter({
-                        percent: data[2][1]
-                    });
-                    var b = document.getElementById("PreviewGaugeMeter_" + 3).getElementsByTagName("b");
-                    b[1].innerText = "total:" + (data[0][3] / 1024).toFixed(2) + "G"
-                    b[2].innerText = "used:" + ((data[0][3] - data[1][3]) / 1024).toFixed(
-                        2) + "G"
-                    $("#PreviewGaugeMeter_" + 3).gaugeMeter({
-                        percent: data[2][3]
-                    });
-                } else {
-                    console.log("reach hereeee")
-                    //cpu
-                    var b = document.getElementById("PreviewGaugeMeter_" + 0).getElementsByTagName("b");
-                    b[1].innerText = " "
-                    b[2].innerText = " "
-                    $("#PreviewGaugeMeter_" + 0).gaugeMeter({
-                        percent: data[2][0]
-                    });
-
-                    //dram
-                    var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
-                    b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
-                    b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
-                        2) + "G"
-                    $("#PreviewGaugeMeter_" + 1).gaugeMeter({
-                        percent: data[2][1]
-                    });
-
-
-                    //aep
-                    var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
-                    b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
-                    b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
-                        2) + "G"
-                    $("#PreviewGaugeMeter_" + 2).gaugeMeter({
-                        percent: data[2][2]
-                    });
-
-
-
-
-
-                    // for (var i = 0; i < memory_num; i++) {
-                    //     var b = document.getElementById("PreviewGaugeMeter_" + i).getElementsByTagName("b");
-                    //     b[1].innerText = "total:" + (data[0][i] / 1024).toFixed(2) + "G"
-                    //     b[2].innerText = "used:" + ((data[0][i] - data[1][i]) / 1024).toFixed(
-                    //         2) + "G"
-                    //     $("#PreviewGaugeMeter_" + i).gaugeMeter({
-                    //         percent: data[2][i]
-                    //     });
-                    // }
-                }
-            }
-        });
-    }
-
-    setInterval(memory, 5000);
 
 
     function createdata() {
@@ -194,24 +40,18 @@ $(document).ready(function () {
         // 通过mode判断数据线名称，格子都是一个。
         var series = new Array();
         var seriesdata = new Array();
-        var rpma_modes=["sync_read_rpma","sync_write_rpma","async_read_rpma","async_write_rpma"]
+        var rdma_moddes=["read_rdma","write_rdma"]
 
-        var names = {"sync_read_rpma":"Sync_read_rpma",
-        "sync_write_rpma":"Sync_write_rpma",
-        "async_read_rpma":"Async_read_rpma",
-        "async_write_rpma":"Async_write_rpma"}
+        var names = {"read_rdma": "Read_RDMA","write_rdma":"Write_RDMA"}
 
-        var colors = {"sync_read_rpma":"#7cb5ec",
-        "sync_write_rpma":"#90ed7d",
-        "async_read_rpma":"#f7a35c",
-        "async_write_rpma":"#8085e9"}
-        console.log(mode)
-        if (mode=="compare"){
+        var colors = {"read_rdma":"#f15c80","write_rdma":"#e4d354"}
+        console.log(mode_rdma)
+        if (mode_rdma=="compare"){
             var data = [];
-            if (mode)
+            if (mode_rdma)
             var x0 = 0;
             var y0 = [];
-            for (var s = 0; s < rpma_modes.length; s++){
+            for (var s = 0; s < rdma_moddes.length; s++){
                 item = [0];
                 y0.push(item);
             }
@@ -234,9 +74,9 @@ $(document).ready(function () {
                 for (var n = 0; n < seriesdatas.length; n++) {
                     temp.push(seriesdatas[n][m]);
                 }
-                instance_data["name"] = names[rpma_modes[m]];
+                instance_data["name"] = names[rdma_moddes[m]];
                 instance_data["data"] = temp;
-                instance_data["color"] = colors[rpma_modes[m]]
+                instance_data["color"] = colors[rdma_moddes[m]]
                 series.push(instance_data);
             }
             if (series.length!=0) {
@@ -247,9 +87,9 @@ $(document).ready(function () {
             
         }
         else{
-            console.log("come to ",mode)
+            console.log("come to ",mode_rdma)
             var data = [];
-            if (mode)
+            if (mode_rdma)
             var x0 = 0;
             var y0 = [[0]];
             for (var i = 0; i < y0.length; i++) {
@@ -270,9 +110,9 @@ $(document).ready(function () {
                 for (var n = 0; n < seriesdatas.length; n++) {
                     temp.push(seriesdatas[n][m]);
                 }
-                instance_data["name"] = names[mode];
+                instance_data["name"] = names[mode_rdma];
                 instance_data["data"] = temp;
-                instance_data["color"] = colors[mode];
+                instance_data["color"] = colors[mode_rdma];
                 series.push(instance_data);
             }
             if (series.length!=0) {
@@ -285,35 +125,6 @@ $(document).ready(function () {
 
 
 
-    }
-
-
-    function addbefore(series,x,y){
-        console.log("reached",series.data)
-        for (i=0; i<series.data.length; i++){
-            console.log("all x",series.data[i].x)
-            prev_x = series.data[i-1].x
-            next_x = series.data[i].x
-            if (prev_x < x && next_x > x){
-                for (j=i; j<series.data.length;j++){
-                    next_x = series.data[j].x
-                    next_y = series.data[j].y
-                }
-            }
-        }
-    }
-
-    function getredis() {
-        var redis_data;
-        $.ajax({
-            url: "/redis_info",
-            async: false,
-            success: function (data) {
-                redis_data = data;
-                return redis_data;
-            }           
-        });
-        return redis_data;
     }
 
    // qps_chart();
@@ -353,14 +164,14 @@ $(document).ready(function () {
     function qps_chart() {
         qps_chart_flag=true;
         clearInterval(qps_interval);   
-        if (mode == "compare"){
+        if (mode_rdma == "compare"){
             var QPS_time = 500;
         }
         else{
-            var QPS_time = 5000;
+            var QPS_time = 2000;
         }
 
-        var what = Highcharts.chart('container', {
+        var what = Highcharts.chart('container2', {
             chart: {
                 type: 'line',
                 backgroundColor: '#272B30',
@@ -373,42 +184,35 @@ $(document).ready(function () {
                         var series = this.series
                         var loadData = function () {
                             $.ajax({
-                                url: "/redis_info",
+                                url: "/redis_info_rdma",
                                 async: false,
                                 success: function (data) {
                                     //首先是单个名字mode读取
-                                    var name = mode;
+                                    var name = mode_rdma;
                                     console.log("times");
                                     console.log(series);
 
                                     //然后是情况的考虑,default 多条
-                                    if (mode == "compare"){
-                                        names = ["sync_read_rpma","sync_write_rpma","async_read_rpma","async_write_rpma"]
+                                    if (mode_rdma == "compare"){
+                                        names = ["read_rdma","write_rdma"]
                                         if (data.length != 0 && series.length != 0) {
                                             // qps_chart_flag=true;
                                              for (var k = 0; k < series.length; k++) {
-                                                 console.log(series[k].name)
-                                                 console.log(data)
-                                                 //现在四个还是四个元素，有名，无值
-                                                 if (data[k][names[k]].length == 0){
-                                                     continue
+    
+                                                 //x ,data[0]是因为jsonify多加了一层不知道什么的嵌套
+                                                 //是个字典的集合，但是因为是字典的集合所以没有顺序没有名字？
+                                                 console.log("what is ",data[k][names[k]][0])
+                                                 var x = data[k][names[k]][0]
+                                                 var lastTime = 0;
+                                                 if (series[k].data.length > 0) {
+                                                     lastTime = series[k].data[
+                                                         series[k].data.length -
+                                                         1].x
                                                  }
-                                                 else{
-                                                    //x ,data[0]是因为jsonify多加了一层不知道什么的嵌套
-                                                    //是个字典的集合，但是因为是字典的集合所以没有顺序没有名字？
-                                                    console.log("what is ",data[k][names[k]][0])
-                                                    var x = data[k][names[k]][0]
-                                                    // var lastTime = 0;
-                                                    // if (series[k].data.length > 0) {
-                                                    //     lastTime = series[k].data[
-                                                    //         series[k].data.length -
-                                                    //         1].x
-                                                    // }
-                                                    //  if (x > lastTime) {
-                                                    //      //y
-                                                    series[k].addPoint([x, data[k][names[k]][1]], true, false)
-                                                    //  }
-                                                }
+                                                 if (x > lastTime) {
+                                                     //y
+                                                     series[k].addPoint([x, data[k][names[k]][1]], true, false)
+                                                 }
                                                  // qps += data[k]["bw"][1];
                                                  // console.log(qps)
                                              }
@@ -422,8 +226,6 @@ $(document).ready(function () {
     
                                                  //x 
                                                  console.log("what is ",data[0])
-                                                 console.log("name ", name)
-                                                 console.log(data[0][name])
                                                  var x = data[0][name][0]
                                                  var lastTime = 0;
                                                  if (series[k].data.length > 0) {
@@ -431,10 +233,9 @@ $(document).ready(function () {
                                                          series[k].data.length -
                                                          1].x
                                                  }
-                                                 console.log("not reached")
                                                  if (x > lastTime) {
                                                      //y
-                                                    series[k].addPoint([x, data[0][name][1]], true, false)
+                                                     series[k].addPoint([x, data[0][name][1]], true, false)
                                                  }
                                                  // qps += data[k]["bw"][1];
                                                  // console.log(qps)
@@ -460,7 +261,7 @@ $(document).ready(function () {
             },
 
             title: {
-                text: 'BW-Latency',
+                text: 'BW-threads',
                 style: {
                     color: '#808080',
                     fontSize: '20px',
@@ -469,13 +270,13 @@ $(document).ready(function () {
 
             xAxis: {
                 title: {
-                    text: 'avg Latency (usec)',
+                    text: 'Threads',
                     style: {
                         color: '#808080',
                         fontSize: '20px',
-                    },
+                    }
                 },
-                type: 'linear',
+                type: 'line',
                 tickPixelInterval: 200,
                 gridLineColor: '#373B40',
                 gridLineWidth: 1,
@@ -537,7 +338,7 @@ $(document).ready(function () {
             },
             tooltip: {
                 headerFormat: '<b>{series.name}</b><br/>',
-                pointFormat: 'Latency: {point.x:.2f} usec<br/>Bind Width: {point.y:.2f} GiB/s'
+                pointFormat: 'Threads: {point.x:.2f}<br/>Bind Width: {point.y:.2f} GiB/s'
             },
             legend: {
                 enabled: true,
@@ -557,8 +358,8 @@ $(document).ready(function () {
         //         url: "/flush",
         //         success: function(data){
         //             console.log("flush")
-        //             mode = data
-        //             console.log(mode);
+        //             mode_rdma = data
+        //             console.log(mode_rdma);
         //             var them = what.series
 
         //         }

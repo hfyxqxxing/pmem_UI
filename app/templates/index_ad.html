@@ -57,28 +57,28 @@
                     </tr> -->
                 </table>
             </div>
-        </div>
+        </div>/
         <div class="Preview">
             <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
                 data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
-                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="Socket0_DRAM"
+                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="CPU_0 Usage"
                 data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
                 data-animationstep="0"></div>
             <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-bind="gaugeValue: Percent" data-text=null
                 data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
                 data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
-                data-prelabel="Socket0_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
+                data-prelabel="Socket0_DRAM" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
                 data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
             <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-bind="gaugeValue: Percent" data-prepend=null
                 data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
-                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="Socket1_DRAM"
+                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="20" data-prelabel="Socket0_AEP"
                 data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
                 data-animationstep="0"></div>
-            <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-bind="gaugeValue: Percent" data-text=null
+            <!-- <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-bind="gaugeValue: Percent" data-text=null
                 data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
                 data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
                 data-prelabel="Socket1_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
-                data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
+                data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div> -->
         </div>
                         
         
@@ -88,6 +88,7 @@
                 <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="sync_write_rpma">Sync_Write_RPMA</button>
                 <button class="button" style="color: #f7a35c;"  name="mode" type ="submit" value="async_read_rpma">Async_Read_RPMA</button>
                 <button class="button" style="color: #8085e9;"  name="mode" type ="submit" value="async_write_rpma">Async_Write_RPMA</button>
+                <button class="button" style="color: cornsilk;"  name="mode" type ="submit" value="compare">Compare</button>
 
                 <!-- <button class="button" style="color: #f15c80;"  name="mode" type ="submit" value="rdma">RDMA</button> -->
             </form>
@@ -98,7 +99,23 @@
         <div id="charts">
             <div id="chart_qps">               
             </div>
-            <div id="container"></div>
+            <div id="container"; data-highcharts-chart="0"></div>
+        </div>
+
+        <div>
+            <form action="/selection"  method="POST">
+                <button class="button" style="color: #f15c80;" name="mode_rdma" type ="submit" value="read_rdma">Read_RDMA</button>
+                <button class="button" style="color: #e4d354;"  name="mode_rdma" type ="submit" value="write_rdma">Write_RDMA</button>
+                <button class="button" style="color: cornsilk;"  name="mode_rdma" type ="submit" value="compare_rdma">Compare</button>
+
+            </form>
+
+        </div>
+        
+        <div id="charts_2">
+            <div id="chart_qps_2">               
+            </div>
+            <div id="container2"; data-highcharts-chart="1"></div>
         </div>
 
 
@@ -111,6 +128,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="../static/js/instance_info.js"></script>
+    <script src="../static/js/instance_info_rdma.js"></script>
     <script type="text/javascript">
         </script>
 </body>

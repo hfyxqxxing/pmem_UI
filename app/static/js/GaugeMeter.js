@@ -118,7 +118,7 @@
                 }
                 $("<span></span>").appendTo(t).html(r).css({
                     "line-height": option.size + "px",
-                    "font-size": option.text_size * option.size + "px",
+                    "font-size": option.text_size * option.size - 5 + "px",
                     color: fgcolor
                 });
             }
@@ -233,7 +233,11 @@
                     c = option.percent;
 
                 } else {
-                    c = parseInt(defaults.percent);
+                    c = parseFloat(defaults.percent).toFixed(2);
+                    console.log("c shi",c)
+                    if (c == 0){
+                        c="0.00"
+                    }
                 }
             }
             if (c < 0) c = 0;
