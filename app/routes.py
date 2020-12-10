@@ -23,13 +23,13 @@ app.secret_key = 'xxxxx'
 @app.before_first_request
 def before_first_request():
 
-    session['click_sync_read'] = 0
-    session['click_sync_write'] = 0
-    session['click_async_read'] = 0
-    session['click_async_write'] = 0
-    session['mode'] = "sync_read_rpma"
-    thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/examples/sync_read_results/./ui_rpma.sh',))
-    thread.start()
+    session['click_read'] = 0
+    session['click_write'] = 0
+    session['time'] = 0
+    session['mode'] = "default"
+    # 这个脚本应该处理循环的问题
+    # thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/examples/sync_read_results/./ui_rpma.sh',))
+    # thread.start()
 
     session['click_rdma'] = 0
     session['mode_rdma'] = "read_rdma"
@@ -55,7 +55,7 @@ def index():
         sys_info = {}
         sys_info = get_sys_info()
         # return 时命名该字典以被调用
-        return render_template('index_ad.html',sys_info=sys_info);
+        return render_template('index_demo.html',sys_info=sys_info);
     elif modes=="2LM":
         return render_template('index_memory.html');
     elif modes=="1LM":
@@ -87,44 +87,47 @@ def load_mode():
 def clear():
 
     session['click_rdma'] = 0
-    session['click_sync_read'] = 0
-    session['click_sync_write'] = 0
-    session['click_async_read'] = 0
-    session['click_async_write'] = 0
+    session['click_read'] = 0
+    session['click_write'] = 0
     print("mode", session['mode'])
     return session['mode']
 
 @app.route('/selection', methods=['GET','POST'])
 def one():
-    mode_name=session['mode'] = request.form.get("mode")
+    mode_name= request.form.get("mode")
+    session['mode'] = mode_name
     print("go_to",session['mode'])
-    file_names={"sync_read_rpma":"sync_read_results",
-    "sync_write_rpma":"sync_write_results",
-    "async_read_rpma":"async_read_results",
-    "async_write_rpma":"async_write_results"}
+    if (mode_name == "read_rpma"):
+        session['mode_rdma'] = "read_rdma"
+    if (mode_name == "write_rpma"):
+        session['mode_rdma'] = "write_rdma"
+
+    file_names={"read_rpma":"read_results",
+    "write_rpma":"write_results"}
 
     clicks = {
-        "sync_read_rpma":'click_sync_read',
-    "sync_write_rpma":'click_sync_write',
-    "async_read_rpma":'click_async_read',
-    "async_write_rpma":'click_async_write'
-    }
+        "read_rpma":'click_read',
+    "write_rpma":'click_write'}
+
+    session[clicks[mode_name]] = 0
 
 
+    os.popen("top -n 1 | grep -e 'rpma_fio_sh' -e 'fio'")
 
-    if (mode_name != "compare"):
-        os.system("killall -9 ui_rpma.sh")
-        session[clicks[mode_name]] = 0
-        thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/examples/'+file_names[mode_name]+'/./ui_rpma.sh',))
-        thread.start()
+    os.system("killall -9 fio")
+    os.system("killall -9 run.sh")
+    # if (mode_name == "")
+    #??
+    thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/examples/'+file_names[mode_name]+'/./run.sh',))
+    thread.start()
 
     # 可去除    
-    if (mode_name == "compare"):
-        os.system("killall -9 ui_rpma.sh")
+    # if (mode_name == "compare"):
+    #     os.system("killall -9 ui_rpma.sh")
     
     # os.system("/home/xiaoran/fio/examples/"+file_names[mode_name]+"/./ui_rpma.sh")
 
-    session['mode_rdma'] = request.form.get("mode_rdma")
+
     print("go_to",session['mode_rdma'])
 
     return redirect('/')
@@ -139,99 +142,69 @@ def one():
 
 @app.route('/memory_info')
 def load_memory():
-    click_sync_read = session['click_sync_read']
-    click_sync_write = session['click_sync_write']
-    click_async_read = session['click_async_read']
-    click_async_write = session['click_async_write']
+    click_read = session['click_read']
+    click_write = session['click_write']
     mode = session['mode']
 
     #compare 直接返回系统使用率/0
 
 
-
-    if (mode == "sync_read_rpma"):
-        result = DCPMM_Capacity(click_sync_read,mode)
-    if (mode == "sync_write_rpma"):
-        result = DCPMM_Capacity(click_sync_write,mode)
-    if (mode == "async_read_rpma"):
-        result = DCPMM_Capacity(click_async_read,mode)
-    if (mode == "async_write_rpma"):
-        result = DCPMM_Capacity(click_async_write,mode)
-    if (mode == "compare"):
-        result = DCPMM_Capacity(999,mode)
-
-    memory =jsonify(result)
+    result = DCPMM_Capacity(mode)
+    memory = jsonify(result)
    # memory =jsonify([10,20,30,40]);
     return memory
 
 @app.route('/redis_info')
 def load_redis():
-    click_sync_read = session['click_sync_read']
-    click_sync_write = session['click_sync_write']
-    click_async_read = session['click_async_read']
-    click_async_write = session['click_async_write']
+    click_read = session['click_read']
+    click_write = session['click_write']
+
     mode = session['mode']
-    print("click_sync_read: ",click_sync_read)
     print("show mode: ",mode)
 
-    if (click_sync_read > 20 ):
-        session['click_sync_read'] = 20
-        click_sync_read = 20
-    if (click_sync_write > 20 ):
-        session['click_sync_write'] = 20
-        click_sync_write = 20
-    if (click_async_read > 20 ):
-        session['click_async_read'] = 20
-        click_async_read = 20
-    if (click_async_write > 20 ):
-        session['click_async_write'] = 20
-        click_async_write = 20
+    clicks = {
+        "read_rpma":'click_read',
+    "write_rpma":'click_write',}
 
-
-    if click_sync_read == 0:
-        time.sleep(3)
-    elif click_sync_write == 0:
-        time.sleep(3)
-    elif click_async_read == 0:
-        time.sleep(3)
-    elif click_async_write == 0:
-        time.sleep(3)
-
-    result = get_data(click_sync_read,click_sync_write,click_async_read
-    ,click_async_write, mode)
+    # ??
+    if (mode == "default"):
+        result = get_data_new(mode)
+    else:
+        if clicks[mode] == 0:
+            # time.sleep(5)
+            result = get_data_new(mode)
+            session[clicks[mode]]+=1
+        else:
+            result = get_data_new(mode)
 
     
 
     #判断每个是否有返回值，有则加一
-    if (mode == "compare"):
-        for elem in result:
-            name, = elem
-            if (len(elem[name])!=0):
-                print("namerrr,",name)
-                if (name == "sync_read_rpma"):
-                    session['click_sync_read'] +=1
-                elif (name == "sync_write_rpma"):
-                    session['click_sync_write'] +=1
-                elif (name == "async_read_rpma"):
-                    session['click_async_read'] +=1
-                elif (name == "async_write_rpma"):
-                    session['click_async_write'] +=1
-            else:
-                pass
-    else:
-        if(len(result) !=0):
-            name, = result[0]
-            print("name",name)
-            if (name == "sync_read_rpma"):
-                session['click_sync_read'] +=1
-            if (name == "sync_write_rpma"):
-                session['click_sync_write'] +=1
-            if (name == "async_read_rpma"):
-                session['click_async_read'] +=1
-            if (name == "async_write_rpma"):
-                session['click_async_write'] +=1
-        else:
-            pass
+    # if (mode == "compare"):
+    #     for elem in result:
+    #         name, = elem
+    #         if (len(elem[name])!=0):
+    #             print("namerrr,",name)
+    #             if (name == "read_rpma"):
+    #                 session['click_read'] +=1
+    #             elif (name == "write_rpma"):
+    #                 session['click_write'] +=1
+    #         else:
+    #             pass
+    # else:
+    #     if(len(result) !=0):
+    #         name, = result[0]
+    #         print("name",name)
+    #         if (name == "sync_read_rpma"):
+    #             session['click_read'] +=1
+    #         if (name == "sync_write_rpma"):
+    #             session['click_write'] +=1
+    #         if (name == "async_read_rpma"):
+    #             session['click_read'] +=1
+    #         if (name == "async_write_rpma"):
+    #             session['click_write'] +=1
+    #     else:
+    #         pass
     
 
     redis = jsonify(result)
@@ -261,12 +234,12 @@ def load_redis_rdma():
 
 # @app.route('/stop_signal')
 # def stop_refresh():
-#     if (session['click_sync_read'] == 20):
+#     if (session['click_read'] == 20):
 #         return 60
-#     elif (session['click_sync_write'] = 20):
+#     elif (session['click_write'] = 20):
 #         return 60
-#     session['click_async_read'] = 0
-#     session['click_async_write'] = 0
+#     session['click_read'] = 0
+#     session['click_write'] = 0
 
 
 

@@ -1,0 +1,34 @@
+# Example of the librpma client job
+
+# The engine requires some options to work correctly:
+# - thread XXX some initiation steps are synchronized between threads
+# - create_serialize=0 forces specific initiation sequence
+
+[global]
+ioengine=librpma_client
+hostname=192.168.0.1
+port=996
+thread
+
+# The client will get a remote memory region description after establishing
+# a connection.
+
+[client]
+sync=${sync}
+numjobs=${numjobs}
+group_reporting=1
+create_serialize=0
+iomem_align=4096
+iodepth=${depth}
+readwrite=${mode}
+blocksize=4096
+ramp_time=5
+time_based
+runtime=30
+write_lat_log=c
+group_reporting=1
+log_offset=1
+log_avg_msec=5000
+disable_clat=1
+lat_percentiles=1
+percentile_list=99.9:99.99:99.999

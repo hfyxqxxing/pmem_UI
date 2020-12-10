@@ -1,0 +1,5 @@
+client:rw=read,iodepth=8
+client:jobs=14):2020
+  read: IOPS=3167k, BW=12.1GiB/s (12.0GB/s)(36.2GiB/3000msec)
+lat(nsec):avg=4275.93,stdev=588.43
+cpu:usr=0.00%,

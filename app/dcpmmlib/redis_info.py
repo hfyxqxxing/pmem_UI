@@ -81,6 +81,7 @@ def get_current_commands(r):
           # print('start_commands', last_commands);
 
 
+
 def get_data(click_sync_read,click_sync_write,click_async_read
     ,click_async_write,mode):
    values = [];
@@ -186,13 +187,26 @@ def get_data_rdma(click,mode):
       return values
 
 
+def get_data_new (mode):
+   value = []
+   if (mode == "read_rpma"):
+      value = get_data_read_rpma()
+   elif(mode == "write_rpma"):
+      print("got in")
+      value = get_data_write_rpma()
+   else:
+      value = {"default":[0,0]}
+   return value
+
+
 #应该写成均返回得是value_one,单个字典值。
-def get_data_sync_read_rpma(number):
-   print("sync_read_number",number)
-   name = "result_"+str(number)+".log"
-   print(name)
-   value_one = {}
-   path="/home/xiaoran/fio/examples/sync_read_results/"
+def get_data_read_rpma():
+   number=0
+   # print("sync_read_number",number)
+   name = "result.log"
+   # print(name)
+   value_one = {"read_rpma":[0,0]}
+   path="/home/xiaoran/fio/examples/read_results/"
 
 
    if (os.path.exists(path+name)):
@@ -200,7 +214,7 @@ def get_data_sync_read_rpma(number):
       # line 1 bw
       f = open(path+name,'r')
       lines = f.readlines()
-      print(lines)
+      # print(lines)
       if (len(lines) < 2):
          return values
       str1 = lines[2]
@@ -215,11 +229,11 @@ def get_data_sync_read_rpma(number):
          width = round(float(width[0]) / 1074 ,2 )
       else:
          width = round(float(width[0]),2)
-      print("BW is :",width)
+      # print("BW is :",width)
 
       #line 1 latency
       str_lat = lines[3]
-      print(str_lat)
+      # print(str_lat)
       pattern_lat = re.compile(r'(?<=avg=)\d+\.?\d+')
       pattern_sec = re.compile('nsec|usec')
       # print(pattern.findall(str1))
@@ -232,9 +246,13 @@ def get_data_sync_read_rpma(number):
       else:
          latency = round(float(latency),2)
 
-      print("latency is: ",latency)
+      # print("latency is: ",latency)
 
-      value_one["sync_read_rpma"] = [latency,width]
+      value_one["read_rpma"] = [latency,width]
+
+      print("value_one latency is:",latency )
+      print("and bw is:", width)
+      
       
    else:
       print("shuile")
@@ -242,13 +260,13 @@ def get_data_sync_read_rpma(number):
    
    return value_one
 
-def get_data_sync_write_rpma(number):
-   print("sync_write_number",number)
+def get_data_write_rpma():
+   # print("sync_write_number",number)
 
-   name = "result_"+str(number)+".log"
-   print(name)
-   value_one = {}
-   path="/home/xiaoran/fio/examples/sync_write_results/"
+   name = "result.log"
+   # print(name)
+   value_one = {"write_rpma":[0,0]}
+   path="/home/xiaoran/fio/examples/write_results/"
 
 
    if (os.path.exists(path+name)):
@@ -270,11 +288,11 @@ def get_data_sync_write_rpma(number):
          width = round(float(width[0]) / 1074 ,2 )
       else:
          width = round(float(width[0]),2)
-      print("BW is :",width)
+      # print("BW is :",width)
 
       #line 1 latency
       str_lat = lines[3]
-      print(str_lat)
+      # print(str_lat)
       pattern_lat = re.compile(r'(?<=avg=)\d+\.?\d+')
       pattern_sec = re.compile('nsec|usec')
       # print(pattern.findall(str1))
@@ -287,9 +305,13 @@ def get_data_sync_write_rpma(number):
       else:
          latency = round(float(latency),2)
 
-      print("latency is: ",latency)
+      # print("latency is: ",latency)
 
-      value_one["sync_write_rpma"] = [latency,width]
+      value_one["write_rpma"] = [latency,width]
+
+      
+      print("value_one latency is:",latency )
+      print("and bw is:", width)
       
    else:
       print("maa le")
@@ -467,3 +489,11 @@ def get_data_write_rdma(number):
       return value_one
    
    return value_one
+
+
+
+def bw_data():
+   return 10
+
+def lat_data():
+   return 5

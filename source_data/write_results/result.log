@@ -1,0 +1,5 @@
+client:rw=write,iodepth=8
+client:jobs=18):2020
+  write: IOPS=1833k, BW=7159MiB/s (7506MB/s)(20.0GiB/3000msec); 0 zone resets
+lat(usec):avg=9.65,
+cpu:usr=0.04%,

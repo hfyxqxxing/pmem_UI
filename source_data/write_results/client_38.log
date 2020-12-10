@@ -1,0 +1,21 @@
+client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_client, iodepth=8
+...
+fio-3.23-168-gb7dc2
+Starting 38 threads
+
+client: (groupid=0, jobs=38): err= 0: pid=759181: Thu Dec 10 11:48:08 2020
+  read: IOPS=3265k, BW=12.5GiB/s (13.4GB/s)(37.4GiB/3001msec)
+     lat (usec): min=2, max=1318, avg=11.33, stdev= 1.63
+    lat percentiles (nsec):
+     | 99.900th=[25984], 99.990th=[28800], 99.999th=[32128]
+   bw (  MiB/s): min=12566, max=13101, per=99.48%, avg=12686.04, stdev= 7.57, samples=190
+   iops        : min=3217124, max=3353920, avg=3247627.20, stdev=1937.44, samples=190
+  cpu          : usr=98.91%, sys=0.41%, ctx=207, majf=0, minf=372
+  IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     issued rwts: total=9796790,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=8
+
+Run status group 0 (all jobs):
+   READ: bw=12.5GiB/s (13.4GB/s), 12.5GiB/s-12.5GiB/s (13.4GB/s-13.4GB/s), io=37.4GiB (40.1GB), run=3001-3001msec

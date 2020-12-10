@@ -53,7 +53,7 @@ def DCPMM_Mode():
     return "1LM"
 
 
-def DCPMM_Capacity(click,mode_mine):
+def DCPMM_Capacity(mode_mine):
    #mode = DCPMM_Mode1()
     mode=DCPMM_Mode1();
     print(mode)
@@ -62,7 +62,7 @@ def DCPMM_Capacity(click,mode_mine):
        return memory;
     else:
        if mode=="AD_Mode":
-          ad= AD_Mode_Capacity(click,mode_mine);
+          ad= AD_Mode_Capacity(mode_mine);
           return ad;
        elif mode=="Numa_Node":
           numa= Numa_Node_Capacity();
@@ -83,69 +83,49 @@ def Memory_Mode_Capacity():
     return node_size,node_free,node_used
 
 
-def get_cpu(path,prev):
+def get_cpu(path):
    if (os.path.exists(path)):
       f = open(path,'r')
       lines = f.readlines()
       print(lines)
-      str1 = lines[4]
-      pattern = re.compile(r'(?<=usr=)\d+\.?\d+')
-      cpu_usage = pattern.findall(str1)[0]
-   else:
-      if (os.path.exists(prev)):
-         f = open(prev,'r')
-         lines = f.readlines()
-         print(lines)
+      if (len(lines) < 5):
+         cpu_usage = 0
+         # cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").read()
+         print("qiaole")
+      else:
          str1 = lines[4]
          pattern = re.compile(r'(?<=usr=)\d+\.?\d+')
          cpu_usage = pattern.findall(str1)[0]
-      else:
-         cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").read()
-         print("wrong reached:",cpu_usage)
+   else:
+      cpu_usage = 0
+      # cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").read()
+      print("wrong reached:",cpu_usage)
    print("reached",cpu_usage)
    return cpu_usage
 
 
-def AD_Mode_Capacity(click,mode):
+def AD_Mode_Capacity(mode):
    # 要传click参数打开文件那一套
 
     a = [1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40]
     
     name = "yes"
-    number = a[click] 
+   #  number = a[click] 
     node_number=Numa_Node_Number();
     node_size=[];
     node_free=[];
     node_used=[];
-    print("heressssss",mode,"numberrrr",number)
+    paths = {"read_rpma":"read_results",
+    "write_rpma":"write_results","default":"default"}
+    path = "/home/xiaoran/fio/examples/"+paths[mode]+"/result.log"
 
-    if (mode == "sync_read_rpma"):
-       name = "sync_read_results"
-       path = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number)+".log"
-       path_prev = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number-2)+".log"
-       cpu_usage = get_cpu(path,path_prev)
-    elif (mode == "sync_write_rpma"):
-       name = "sync_write_results"
-       path = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number)+".log"
-       path_prev = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number-2)+".log"
-       cpu_usage = get_cpu(path,path_prev)
-    elif (mode == "async_read_rpma"):
-       name = "async_read_results"
-       path = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number)+".log"
-       path_prev = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number-2)+".log"
-       cpu_usage = get_cpu(path,path_prev)
-    elif (mode == "async_write_rpma"):
-       name = "async_write_results"
-       path = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number)+".log"
-       path_prev = "/home/xiaoran/fio/examples/"+name+"/result_"+str(number-2)+".log"
-       cpu_usage = get_cpu(path,path_prev)
-    elif (mode == "compare"):
-       cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").readline()
+    if (mode == "default"):
+       cpu_usage = 0
+      #  cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").read()
     else:
-       print("why")
-       cpu_usage = "0"
+       cpu_usage = get_cpu(path)
 
-    node_size.append(" ")
+    node_size.append("RPMA used")
     node_free.append(" ")
 
     # 从每次的fio获取？？？

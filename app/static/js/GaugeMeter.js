@@ -234,7 +234,7 @@
 
                 } else {
                     c = parseFloat(defaults.percent).toFixed(2);
-                    console.log("c shi",c)
+                    // console.log("c shi",c)
                     if (c == 0){
                         c="0.00"
                     }

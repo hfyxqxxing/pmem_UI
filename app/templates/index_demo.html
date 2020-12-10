@@ -19,7 +19,7 @@
         </div> -->
         <div class="server_info">
             <div class="img">
-                <img src="../static/img/aep_socket.png"  height="227.6px" style="border:2px solid #3A3F44">
+                <img src="../static/img/rpma_socket.png"  height="227.6px" style="border:2px solid #3A3F44">
             </div>
             <div class="tab">
                 <table border="1">
@@ -84,11 +84,8 @@
         
         <div>
             <form action="/selection"  method="POST">
-                <button class="button" name="mode" type ="submit" value="sync_read_rpma">Sync_Read_RPMA</button>
-                <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="sync_write_rpma">Sync_Write_RPMA</button>
-                <button class="button" style="color: #f7a35c;"  name="mode" type ="submit" value="async_read_rpma">Async_Read_RPMA</button>
-                <button class="button" style="color: #8085e9;"  name="mode" type ="submit" value="async_write_rpma">Async_Write_RPMA</button>
-                <button class="button" style="color: cornsilk;"  name="mode" type ="submit" value="compare">Compare</button>
+                <button class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button>
+                <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button>
 
                 <!-- <button class="button" style="color: #f15c80;"  name="mode" type ="submit" value="rdma">RDMA</button> -->
             </form>
@@ -102,15 +99,6 @@
             <div id="container"; data-highcharts-chart="0"></div>
         </div>
 
-        <div>
-            <form action="/selection"  method="POST">
-                <button class="button" style="color: #f15c80;" name="mode_rdma" type ="submit" value="read_rdma">Read_RDMA</button>
-                <button class="button" style="color: #e4d354;"  name="mode_rdma" type ="submit" value="write_rdma">Write_RDMA</button>
-                <button class="button" style="color: cornsilk;"  name="mode_rdma" type ="submit" value="compare_rdma">Compare</button>
-
-            </form>
-
-        </div>
         
         <div id="charts_2">
             <div id="chart_qps_2">               
@@ -127,8 +115,8 @@
     <script src="../static/js/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="../static/js/instance_info.js"></script>
-    <script src="../static/js/instance_info_rdma.js"></script>
+    <script src="../static/js/instance_info_bw_demo.js"></script>
+    <script src="../static/js/instance_info_lat_demo.js"></script>
     <script type="text/javascript">
         </script>
 </body>
