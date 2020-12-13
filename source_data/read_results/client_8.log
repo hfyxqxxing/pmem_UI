@@ -3,19 +3,19 @@ client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, io
 fio-3.23-168-gb7dc2
 Starting 8 threads
 
-client: (groupid=0, jobs=8): err= 0: pid=1435781: Thu Dec 10 15:58:01 2020
-  read: IOPS=2537k, BW=9912MiB/s (10.4GB/s)(29.0GiB/3000msec)
-     lat (nsec): min=2528, max=261726, avg=3013.11, stdev=370.94
+client: (groupid=0, jobs=8): err= 0: pid=1827913: Sun Dec 13 03:31:11 2020
+  read: IOPS=2527k, BW=9873MiB/s (10.4GB/s)(28.9GiB/3000msec)
+     lat (nsec): min=2522, max=234841, avg=3029.42, stdev=314.29
     lat percentiles (nsec):
-     | 99.900th=[ 5344], 99.990th=[17024], 99.999th=[19328]
-   bw (  MiB/s): min= 9814, max= 9981, per=99.95%, avg=9906.64, stdev= 6.92, samples=40
-   iops        : min=2512513, max=2555284, avg=2536101.00, stdev=1772.66, samples=40
-  cpu          : usr=99.72%, sys=0.00%, ctx=25, majf=0, minf=112
+     | 99.900th=[ 5088], 99.990th=[ 8384], 99.999th=[18304]
+   bw (  MiB/s): min= 9756, max= 9962, per=99.96%, avg=9869.47, stdev= 8.60, samples=40
+   iops        : min=2497664, max=2550488, avg=2526584.40, stdev=2201.44, samples=40
+  cpu          : usr=99.75%, sys=0.00%, ctx=26, majf=0, minf=112
   IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
      submit    : 0=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
      complete  : 0=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued rwts: total=7612415,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     issued rwts: total=7582415,0,0,0 short=0,0,0,0 dropped=0,0,0,0
      latency   : target=0, window=0, percentile=100.00%, depth=8
 
 Run status group 0 (all jobs):
-   READ: bw=9912MiB/s (10.4GB/s), 9912MiB/s-9912MiB/s (10.4GB/s-10.4GB/s), io=29.0GiB (31.2GB), run=3000-3000msec
+   READ: bw=9873MiB/s (10.4GB/s), 9873MiB/s-9873MiB/s (10.4GB/s-10.4GB/s), io=28.9GiB (31.1GB), run=3000-3000msec

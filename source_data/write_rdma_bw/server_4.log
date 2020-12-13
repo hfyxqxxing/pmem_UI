@@ -1,0 +1,39 @@
+
+************************************
+* Waiting for client to connect... *
+************************************
+---------------------------------------------------------------------------------------
+                    RDMA_Write BW Test
+ Dual-port       : OFF		Device         : mlx5_0
+ Number of qps   : 4		Transport type : IB
+ Connection type : RC		Using SRQ      : OFF
+ PCIe relax order: ON
+ ibv_wr* API     : ON
+ CQ Moderation   : 100
+ Mtu             : 1024[B]
+ Link type       : Ethernet
+ GID index       : 3
+ Max inline data : 0[B]
+ rdma_cm QPs	 : OFF
+ Data ex. method : Ethernet
+---------------------------------------------------------------------------------------
+ local address: LID 0000 QPN 0x0b35 PSN 0xd2137b RKey 0x001aa1 VAddr 0x0000000143a000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ local address: LID 0000 QPN 0x0b36 PSN 0x1e3749 RKey 0x001aa1 VAddr 0x0000000143b000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ local address: LID 0000 QPN 0x0b37 PSN 0x46a15f RKey 0x001aa1 VAddr 0x0000000143c000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ local address: LID 0000 QPN 0x0b38 PSN 0xc8aec2 RKey 0x001aa1 VAddr 0x0000000143d000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b33 PSN 0xc72c5c RKey 0x00197c VAddr 0x00000000a20000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ remote address: LID 0000 QPN 0x0b34 PSN 0x3ff516 RKey 0x00197c VAddr 0x00000000a21000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ remote address: LID 0000 QPN 0x0b35 PSN 0x269fa8 RKey 0x00197c VAddr 0x00000000a22000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ remote address: LID 0000 QPN 0x0b36 PSN 0xe989d7 RKey 0x00197c VAddr 0x00000000a23000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+---------------------------------------------------------------------------------------
+ #bytes     #iterations    BW peak[MB/sec]    BW average[MB/sec]   MsgRate[Mpps]
+ 4096       20000            12735.35            12610.08		   3.228179
+---------------------------------------------------------------------------------------

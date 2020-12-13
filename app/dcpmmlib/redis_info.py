@@ -72,15 +72,6 @@ def get_current_info1():
    # timer = threading.Timer(1.0,get_current_info , [r])
    # timer.start()
 
-def get_current_commands(r):
-    global last_commands;
-    redis_info=r.info()
-    for key in redis_info:
-        if key == 'total_commands_processed':
-            last_commands=redis_info['total_commands_processed'];
-          # print('start_commands', last_commands);
-
-
 
 def get_data(click_sync_read,click_sync_write,click_async_read
     ,click_async_write,mode):
@@ -187,15 +178,24 @@ def get_data_rdma(click,mode):
       return values
 
 
-def get_data_new (mode):
+def get_data_new (mode,click_rdma,mode_rdma):
+   
    value = []
    if (mode == "read_rpma"):
       value = get_data_read_rpma()
+      value[mode_rdma]=get_data_read_rdma(click_rdma)
    elif(mode == "write_rpma"):
       print("got in")
       value = get_data_write_rpma()
+      value[mode_rdma]=get_data_write_rdma(click_rdma)
    else:
+      #default的时候rdma别读了。
       value = {"default":[0,0]}
+   
+
+   if (value[mode] == [0,0] and mode != "default"):
+      value[mode_rdma] = [0,0]
+
    return value
 
 
@@ -205,9 +205,8 @@ def get_data_read_rpma():
    # print("sync_read_number",number)
    name = "result.log"
    # print(name)
-   value_one = {"read_rpma":[0,0]}
    path="/home/xiaoran/fio/examples/read_results/"
-
+   value_one = {"read_rpma":[0,0]}
 
    if (os.path.exists(path+name)):
 
@@ -319,124 +318,69 @@ def get_data_write_rpma():
    
    return value_one
 
-def get_data_async_read_rpma(number):
-   print("async_read_number",number)
 
+def get_data_read_rdma(click_rdma):
+   a = [1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40]
+   number = a[click_rdma]
    name = "result_"+str(number)+".log"
    print(name)
-   value_one = {}
-   path="/home/xiaoran/fio/examples/async_read_results/"
+   value_one = [0,0]
+   path="/home/xiaoran/fio/examples/read_rdma_bw/"
+   path_lat="/home/xiaoran/fio/examples/read_rdma_lat/"
+
+   width = 0
+   latency = 0
 
 
-   if (os.path.exists(path+name)):
+   if (os.path.exists(path+name) and os.path.exists(path_lat+name)):
 
-      # line 1
+      #bw
       f = open(path+name,'r')
       lines = f.readlines()
-      if (len(lines) < 2):
-         return values
-      str1 = lines[2]
 
-      pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
-      pattern2 = re.compile('MiB/s|GiB/s')
-      # print(pattern.findall(str1))
-      # print(pattern2.findall(str1))
-      width = pattern.findall(str1)
-      unit = pattern2.findall(str1)
-      if (unit[0] == "MiB/s"):
-         width = round(float(width[0]) / 1074 ,2 )
+      bw = lines[2].split()[3]
+      print("this is ", bw)
+   
+      if (float(bw) > 20.0):
+         width_2 = round(float(bw) / 1074 ,2 )
       else:
-         width = round(float(width[0]),2)
-      print("BW is :",width)
-      #line 1 latency
-      str_lat = lines[3]
-      print(str_lat)
-      pattern_lat = re.compile(r'(?<=avg=)\d+\.?\d+')
-      pattern_sec = re.compile('nsec|usec')
-      # print(pattern.findall(str1))
-      # print(pattern2.findall(str1))
-      unit = pattern_sec.findall(str_lat)[0]
-      latency = pattern_lat.findall(str_lat)[0]
+         width_2 = round(float(bw),2)
+      print(width_2)
+      width = width_2
 
-      if (str(unit) == "nsec"):
-         latency = round(float(latency)/1000,2)
-      else:
-         latency = round(float(latency),2)
+   
+      #bw
+      f = open(path_lat+name,'r')
+      lines = f.readlines()
 
-      print("latency is: ",latency)
+      lat = lines[2].split()[5]
+      print("this is lat", lat)
+   
+      latency = round(float(lat),2)
 
-      #line 1 latency
-      str_lat = lines[3]
-      print(str_lat)
-      pattern_lat = re.compile(r'(?<=avg=)\d+\.?\d+')
-      pattern_sec = re.compile('nsec|usec')
-      # print(pattern.findall(str1))
-      # print(pattern2.findall(str1))
-      unit = pattern_sec.findall(str_lat)[0]
-      latency = pattern_lat.findall(str_lat)[0]
-
-      if (str(unit) == "nsec"):
-         latency = round(float(latency)/1000,2)
-      else:
-         latency = round(float(latency),2)
-
-      print("latency is: ",latency)
-
-      value_one["async_read_rpma"] = [latency,width]
+      value_one = [latency,width]
       
    else:
-      print("maaa le")
+      print("shuile")
       return value_one
    
    return value_one
 
 
-def get_data_async_write_rpma(number):
-   print("async_write_number",number)
-
+def get_data_write_rdma(click_rdma):
+   a = [1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40]
+   number = a[click_rdma]
    name = "result_"+str(number)+".log"
    print(name)
-   value_one = {}
-   path="/home/xiaoran/fio/examples/async_write_results/"
+   value_one = [0,0]
+   path="/home/xiaoran/fio/examples/write_rdma_bw/"
+   path_lat="/home/xiaoran/fio/examples/read_rdma_lat/"
+
+   width = 0
+   latency = 0
 
 
-   if (os.path.exists(path+name)):
-
-      # line 1
-      f = open(path+name,'r')
-      lines = f.readlines()
-      if (len(lines) < 2):
-         return values
-      str1 = lines[2]
-
-      pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
-      pattern2 = re.compile('MiB/s|GiB/s')
-      # print(pattern.findall(str1))
-      # print(pattern2.findall(str1))
-      width = pattern.findall(str1)
-      unit = pattern2.findall(str1)
-      if (unit[0] == "MiB/s"):
-         width = round(float(width[0]) / 1074 ,2 )
-      else:
-         width = round(float(width[0]),2)
-      print("BW is :",width)
-      value_one["async_write_rpma"] = [number,width]
-      
-   else:
-      print("maaaa le")
-      return value_one
-   
-   return value_one
-
-
-def get_data_read_rdma(number):
-   name = "result_"+str(number)+".log"
-   print(name)
-   value_one = {}
-   path="/home/xiaoran/fio/examples/read_rdma_results/"
-
-
-   if (os.path.exists(path+name)):
+   if (os.path.exists(path+name) and os.path.exists(path_lat+name)):
 
       #line2
       f = open(path+name,'r')
@@ -450,39 +394,18 @@ def get_data_read_rdma(number):
       else:
          width_2 = round(float(bw),2)
       print(width_2)
-
-      value_one["read_rdma"] = [number,width_2]
-      
-   else:
-      print("shuile")
-      return value_one
-   
-   return value_one
-
-
-def get_data_write_rdma(number):
-   name = "result_"+str(number)+".log"
-   print(name)
-   value_one = {}
-   path="/home/xiaoran/fio/examples/write_rdma_results/"
-
-
-   if (os.path.exists(path+name)):
-
-      #line2
-      f = open(path+name,'r')
+      width = width_2
+         
+      #bw
+      f = open(path_lat+name,'r')
       lines = f.readlines()
 
-      bw = lines[2].split()[3]
-      print("this is ", bw)
+      lat = lines[2].split()[5]
+      print("this is lat", lat)
    
-      if (float(bw) > 20.0):
-         width_2 = round(float(bw) / 1074 ,2 )
-      else:
-         width_2 = round(float(bw),2)
-      print(width_2)
+      latency = round(float(lat),2)
 
-      value_one["write_rdma"] = [number,width_2]
+      value_one = [latency,width]
       
    else:
       print("shuile")
@@ -491,9 +414,3 @@ def get_data_write_rdma(number):
    return value_one
 
 
-
-def bw_data():
-   return 10
-
-def lat_data():
-   return 5

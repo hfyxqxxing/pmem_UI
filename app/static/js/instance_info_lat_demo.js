@@ -117,6 +117,9 @@ $(document).ready(function () {
         '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'] 
     });
 
+
+    
+
     function qps_chart() {
         qps_chart_flag=true;
         clearInterval(qps_interval);   

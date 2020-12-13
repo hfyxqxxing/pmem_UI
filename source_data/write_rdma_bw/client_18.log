@@ -1,0 +1,92 @@
+---------------------------------------------------------------------------------------
+                    RDMA_Write BW Test
+ Dual-port       : OFF		Device         : mlx5_0
+ Number of qps   : 18		Transport type : IB
+ Connection type : RC		Using SRQ      : OFF
+ PCIe relax order: ON
+ ibv_wr* API     : ON
+ TX depth        : 128
+ CQ Moderation   : 100
+ Mtu             : 1024[B]
+ Link type       : Ethernet
+ GID index       : 3
+ Max inline data : 0[B]
+ rdma_cm QPs	 : OFF
+ Data ex. method : Ethernet
+---------------------------------------------------------------------------------------
+ local address: LID 0000 QPN 0x0b79 PSN 0xde9051 RKey 0x001983 VAddr 0x007fb893f97000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b7a PSN 0x56159e RKey 0x001983 VAddr 0x007fb893f98000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b7b PSN 0xb6365a RKey 0x001983 VAddr 0x007fb893f99000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b7c PSN 0x122c6a RKey 0x001983 VAddr 0x007fb893f9a000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b7d PSN 0x444e6c RKey 0x001983 VAddr 0x007fb893f9b000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b7e PSN 0x3c4e28 RKey 0x001983 VAddr 0x007fb893f9c000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b7f PSN 0x388531 RKey 0x001983 VAddr 0x007fb893f9d000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b80 PSN 0x3584a0 RKey 0x001983 VAddr 0x007fb893f9e000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b81 PSN 0xc99e8e RKey 0x001983 VAddr 0x007fb893f9f000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b82 PSN 0x8420c1 RKey 0x001983 VAddr 0x007fb893fa0000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b83 PSN 0x230107 RKey 0x001983 VAddr 0x007fb893fa1000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b84 PSN 0xf8edc5 RKey 0x001983 VAddr 0x007fb893fa2000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b85 PSN 0xcab597 RKey 0x001983 VAddr 0x007fb893fa3000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b86 PSN 0x7e71c1 RKey 0x001983 VAddr 0x007fb893fa4000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b87 PSN 0xebcd21 RKey 0x001983 VAddr 0x007fb893fa5000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b88 PSN 0xde4007 RKey 0x001983 VAddr 0x007fb893fa6000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b89 PSN 0x367b47 RKey 0x001983 VAddr 0x007fb893fa7000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0b8a PSN 0x556bbe RKey 0x001983 VAddr 0x007fb893fa8000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ remote address: LID 0000 QPN 0x0b7b PSN 0xdc8bec RKey 0x001aa8 VAddr 0x007f9370a81000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b7c PSN 0x6b789d RKey 0x001aa8 VAddr 0x007f9370a82000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b7d PSN 0xd676ed RKey 0x001aa8 VAddr 0x007f9370a83000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b7e PSN 0x55bd01 RKey 0x001aa8 VAddr 0x007f9370a84000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b7f PSN 0x2488b7 RKey 0x001aa8 VAddr 0x007f9370a85000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b80 PSN 0x388217 RKey 0x001aa8 VAddr 0x007f9370a86000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b81 PSN 0x975bf4 RKey 0x001aa8 VAddr 0x007f9370a87000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b82 PSN 0x4e27a7 RKey 0x001aa8 VAddr 0x007f9370a88000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b83 PSN 0x335289 RKey 0x001aa8 VAddr 0x007f9370a89000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b84 PSN 0x9d44a0 RKey 0x001aa8 VAddr 0x007f9370a8a000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b85 PSN 0xa5a0fa RKey 0x001aa8 VAddr 0x007f9370a8b000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b86 PSN 0x4f5a3c RKey 0x001aa8 VAddr 0x007f9370a8c000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b87 PSN 0xbdce42 RKey 0x001aa8 VAddr 0x007f9370a8d000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b88 PSN 0xcd9490 RKey 0x001aa8 VAddr 0x007f9370a8e000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b89 PSN 0xb79944 RKey 0x001aa8 VAddr 0x007f9370a8f000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b8a PSN 0x4f9cee RKey 0x001aa8 VAddr 0x007f9370a90000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b8b PSN 0xe693a2 RKey 0x001aa8 VAddr 0x007f9370a91000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0b8c PSN 0x158c7d RKey 0x001aa8 VAddr 0x007f9370a92000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+---------------------------------------------------------------------------------------
+ #bytes     #iterations    BW peak[MB/sec]    BW average[MB/sec]   MsgRate[Mpps]
+ 4096       90000            12718.75            12706.25		   3.252800
+---------------------------------------------------------------------------------------

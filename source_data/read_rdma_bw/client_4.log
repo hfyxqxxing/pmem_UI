@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------------------
+                    RDMA_Read BW Test
+ Dual-port       : OFF		Device         : mlx5_0
+ Number of qps   : 4		Transport type : IB
+ Connection type : RC		Using SRQ      : OFF
+ PCIe relax order: ON
+ ibv_wr* API     : ON
+ TX depth        : 128
+ CQ Moderation   : 100
+ Mtu             : 1024[B]
+ Link type       : Ethernet
+ GID index       : 3
+ Outstand reads  : 16
+ rdma_cm QPs	 : OFF
+ Data ex. method : Ethernet
+---------------------------------------------------------------------------------------
+ local address: LID 0000 QPN 0x098e PSN 0x6a7752 OUT 0x10 RKey 0x001967 VAddr 0x0000000232d000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x098f PSN 0xe7e3d4 OUT 0x10 RKey 0x001967 VAddr 0x0000000232e000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0990 PSN 0x4dfa8e OUT 0x10 RKey 0x001967 VAddr 0x0000000232f000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x0991 PSN 0x5de1c5 OUT 0x10 RKey 0x001967 VAddr 0x00000002330000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ remote address: LID 0000 QPN 0x0990 PSN 0xd0089e OUT 0x10 RKey 0x001a8c VAddr 0x000000019a0000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0991 PSN 0x377c67 OUT 0x10 RKey 0x001a8c VAddr 0x000000019a1000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0992 PSN 0x538fef OUT 0x10 RKey 0x001a8c VAddr 0x000000019a2000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x0993 PSN 0xe92edb OUT 0x10 RKey 0x001a8c VAddr 0x000000019a3000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+---------------------------------------------------------------------------------------
+ #bytes     #iterations    BW peak[MB/sec]    BW average[MB/sec]   MsgRate[Mpps]
+ 4096       4000             12819.16            12792.25		   3.274817
+---------------------------------------------------------------------------------------

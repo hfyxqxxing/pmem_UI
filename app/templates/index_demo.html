@@ -81,16 +81,27 @@
                 data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div> -->
         </div>
                         
-        
         <div>
-            <form action="/selection"  method="POST">
-                <button class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button>
-                <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button>
+            <button class="button" style="color:rgb(235, 125, 22);" onclick="select('read_rpma')">Read_RPMA</button>
+            <button onclick="select('write_rpma')" class="button" style="color:rgb(241, 148, 8);" >Write_RPMA</button>
+
+        </div>
+
+        <!-- <div> -->
+            <!-- <button2 class="button2" name="moderrr" type ="submit" value="read_rpma">Try</button2> -->
+            <!-- <button id="read" class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button>
+            <button id="write" class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button>
+        </div> -->
+
+        <!-- <div>
+            <form action="/selection"  method="POST"> -->
+                <!-- <button id="read" class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button> -->
+                <!-- <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button> -->
 
                 <!-- <button class="button" style="color: #f15c80;"  name="mode" type ="submit" value="rdma">RDMA</button> -->
-            </form>
+            <!-- </form>
             
-        </div>
+        </div> -->
 
 
         <div id="charts">
@@ -113,10 +124,13 @@
     <script src="../static/js/jquery-2.1.1.min.js"></script>
     <script src="../static/js/GaugeMeter.js"></script>
     <script src="../static/js/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <!-- 下载到本地 -->
+    <script src="../static/js/exporting.js"></script>
+    <script src="../static/js/export-data.js"></script>
+    <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
     <script src="../static/js/instance_info_bw_demo.js"></script>
-    <script src="../static/js/instance_info_lat_demo.js"></script>
+    <!-- <script src="../static/js/instanceinfo_backup.js"></script> -->
     <script type="text/javascript">
         </script>
 </body>

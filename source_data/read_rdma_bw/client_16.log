@@ -1,0 +1,84 @@
+---------------------------------------------------------------------------------------
+                    RDMA_Read BW Test
+ Dual-port       : OFF		Device         : mlx5_0
+ Number of qps   : 16		Transport type : IB
+ Connection type : RC		Using SRQ      : OFF
+ PCIe relax order: ON
+ ibv_wr* API     : ON
+ TX depth        : 128
+ CQ Moderation   : 100
+ Mtu             : 1024[B]
+ Link type       : Ethernet
+ GID index       : 3
+ Outstand reads  : 16
+ rdma_cm QPs	 : OFF
+ Data ex. method : Ethernet
+---------------------------------------------------------------------------------------
+ local address: LID 0000 QPN 0x09c4 PSN 0xc1f845 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1afee000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09c5 PSN 0x81d4b OUT 0x10 RKey 0x00196d VAddr 0x007f8f1afef000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09c6 PSN 0x5b5c39 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff0000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09c7 PSN 0x741994 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff1000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09c8 PSN 0x4b9217 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff2000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09c9 PSN 0x3a332d OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff3000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09ca PSN 0x27f988 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff4000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09cb PSN 0x5aaae1 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff5000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09cc PSN 0x5bc171 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff6000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09cd PSN 0xcf609f OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff7000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09ce PSN 0xc03357 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff8000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09cf PSN 0x64c69e OUT 0x10 RKey 0x00196d VAddr 0x007f8f1aff9000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09d0 PSN 0xb7332 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1affa000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09d1 PSN 0xc2e1f7 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1affb000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09d2 PSN 0x31a4e9 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1affc000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ local address: LID 0000 QPN 0x09d3 PSN 0x625cf9 OUT 0x10 RKey 0x00196d VAddr 0x007f8f1affd000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:02
+ remote address: LID 0000 QPN 0x09c6 PSN 0x2f61ee OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e380000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09c7 PSN 0x57f040 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e381000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09c8 PSN 0xbc4c8a OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e382000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09c9 PSN 0x4f3211 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e383000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09ca PSN 0xd14d50 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e384000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09cb PSN 0xec2072 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e385000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09cc PSN 0xb1fde9 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e386000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09cd PSN 0x79ae2e OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e387000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09ce PSN 0x83573a OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e388000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09cf PSN 0x88bd34 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e389000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09d0 PSN 0x367cc8 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e38a000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09d1 PSN 0xe991bb OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e38b000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09d2 PSN 0xcdfc8b OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e38c000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09d3 PSN 0x952dc OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e38d000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09d4 PSN 0xb9746a OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e38e000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+ remote address: LID 0000 QPN 0x09d5 PSN 0x8f9ce6 OUT 0x10 RKey 0x001a92 VAddr 0x007f8d7e38f000
+ GID: 00:00:00:00:00:00:00:00:00:00:255:255:192:168:00:01
+---------------------------------------------------------------------------------------
+ #bytes     #iterations    BW peak[MB/sec]    BW average[MB/sec]   MsgRate[Mpps]
+ 4096       16000            13024.82            12742.07		   3.261969
+---------------------------------------------------------------------------------------
