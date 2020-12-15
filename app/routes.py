@@ -23,13 +23,13 @@ app.secret_key = 'xxxxx'
 @app.before_first_request
 def before_first_request():
 
-    session['click_read'] = 0
-    session['click_write'] = 0
+    # session['click_read'] = 0
+    # session['click_write'] = 0
     session['time'] = 0
     session['mode'] = "default"
 
 
-    session['click_rdma'] = 0
+    session['click_rdma'] = 7
     session['mode_rdma'] = "default"
 
 
@@ -76,8 +76,8 @@ def load_mode():
 @app.route('/flush')
 def clear():
 
-    session['click_rdma'] = 0
-    session['click_read'] = 0
+    # session['click_rdma'] = 0
+    # session['click_read'] = 0
     session['click_write'] = 0
     print("mode", session['mode'])
     return session['mode']
@@ -144,12 +144,8 @@ def clear_again():
     file_names={"read_rpma":"read_results",
     "write_rpma":"write_results"}
 
-    clicks = {
-        "read_rpma":'click_read',
-    "write_rpma":'click_write'}
 
-
-    session['click_rdma'] = 0
+    # session['click_rdma'] = 0
 
     # rdma
     # session[clicks[mode_name]] = 0
@@ -184,9 +180,9 @@ def clear_write():
     file_names={"read_rpma":"read_results",
     "write_rpma":"write_results"}
 
-    clicks = {
-        "read_rpma":'click_read',
-    "write_rpma":'click_write'}
+    # clicks = {
+    #     "read_rpma":'click_read',
+    # "write_rpma":'click_write'}
 
     # rdma
     # session[clicks[mode_name]] = 0
@@ -253,8 +249,7 @@ def clear_write():
 
 @app.route('/memory_info')
 def load_memory():
-    click_read = session['click_read']
-    click_write = session['click_write']
+
     mode = session['mode']
 
     #compare 直接返回系统使用率/0
@@ -282,17 +277,21 @@ def load_redis():
     # time_2 = time.time()
     # print("pass time:", time_2-session['time'])
     # session['time'] = time_2
-    if (mode != "default"):
-        if (result[mode_rdma] == [0,0]):
-            pass
-        else:
-            session['click_rdma']+=1
-
-    print("my click",session['click_rdma'])
-    if (session['click_rdma'] == 8):
-        session['click_rdma'] = 7
 
 
+
+    # 有变化的rdma线
+    # if (mode != "default"):
+    #     if (result[mode_rdma] == [0,0]):
+    #         pass
+    #     else:
+    #         session['click_rdma']+=1
+
+    # print("my click",session['click_rdma'])
+    # if (session['click_rdma'] == 8):
+    #     session['click_rdma'] = 7
+
+    # get_test_info
     
     if (result == False):
         return None

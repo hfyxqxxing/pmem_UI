@@ -1,5 +1,5 @@
 client:rw=write,iodepth=8
-client:jobs=1):2020
-  write: IOPS=347k, BW=1355MiB/s (1420MB/s)(4064MiB/3000msec); 0 zone resets
-lat(nsec):avg=2751.60,stdev=367.46
+client:jobs=4):2020
+  write: IOPS=1197k, BW=4676MiB/s (4903MB/s)(13.7GiB/3000msec); 0 zone resets
+lat(nsec):avg=3200.96,stdev=309.34
 cpu:usr=0.00%,

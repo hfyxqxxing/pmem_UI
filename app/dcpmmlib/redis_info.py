@@ -192,9 +192,9 @@ def get_data_new (mode,click_rdma,mode_rdma):
       #default的时候rdma别读了。
       value = {"default":[0,0]}
    
-
-   if (value[mode] == [0,0] and mode != "default"):
-      value[mode_rdma] = [0,0]
+   #有变化的rdma线
+   # if (value[mode] == [0,0] and mode != "default"):
+   #    value[mode_rdma] = [0,0]
 
    return value
 
@@ -206,7 +206,7 @@ def get_data_read_rpma():
    name = "result.log"
    # print(name)
    path="/home/xiaoran/fio/examples/read_results/"
-   value_one = {"read_rpma":[0,0]}
+   value_one = {"read_rpma":[0,0,0]}
 
    if (os.path.exists(path+name)):
 
@@ -217,13 +217,20 @@ def get_data_read_rpma():
       if (len(lines) < 2):
          return values
       str1 = lines[2]
+      str2 = lines[1]
+      print(str2)
 
       pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
       pattern2 = re.compile('MiB/s|GiB/s')
+      pattern3 = re.compile(r'(?<=jobs=)\d+')
       # print(pattern.findall(str1))
       # print(pattern2.findall(str1))
       width = pattern.findall(str1)
       unit = pattern2.findall(str1)
+
+      jobs = pattern3.findall(str2)[0]
+      print("jobs here",jobs)
+
       if (unit[0] == "MiB/s"):
          width = round(float(width[0]) / 1074 ,2 )
       else:
@@ -247,7 +254,7 @@ def get_data_read_rpma():
 
       # print("latency is: ",latency)
 
-      value_one["read_rpma"] = [latency,width]
+      value_one["read_rpma"] = [latency,width,jobs]
 
       print("value_one latency is:",latency )
       print("and bw is:", width)
@@ -264,7 +271,7 @@ def get_data_write_rpma():
 
    name = "result.log"
    # print(name)
-   value_one = {"write_rpma":[0,0]}
+   value_one = {"write_rpma":[0,0,0]}
    path="/home/xiaoran/fio/examples/write_results/"
 
 
@@ -276,6 +283,7 @@ def get_data_write_rpma():
       if (len(lines) < 2):
          return values
       str1 = lines[2]
+      str2 = lines[1]
 
       pattern = re.compile(r'(?<=BW=)\d+\.?\d+')
       pattern2 = re.compile('MiB/s|GiB/s')
@@ -299,6 +307,10 @@ def get_data_write_rpma():
       unit = pattern_sec.findall(str_lat)[0]
       latency = pattern_lat.findall(str_lat)[0]
 
+      pattern3 = re.compile(r'(?<=jobs=)\d+')
+      jobs = pattern3.findall(str2)[0]
+      print("jobs here",jobs)
+
       if (str(unit) == "nsec"):
          latency = round(float(latency)/1000,2)
       else:
@@ -306,7 +318,7 @@ def get_data_write_rpma():
 
       # print("latency is: ",latency)
 
-      value_one["write_rpma"] = [latency,width]
+      value_one["write_rpma"] = [latency,width,jobs]
 
       
       print("value_one latency is:",latency )
@@ -339,6 +351,8 @@ def get_data_read_rdma(click_rdma):
       lines = f.readlines()
 
       bw = lines[2].split()[3]
+      
+
       print("this is ", bw)
    
       if (float(bw) > 20.0):
@@ -358,7 +372,7 @@ def get_data_read_rdma(click_rdma):
    
       latency = round(float(lat),2)
 
-      value_one = [latency,width]
+      value_one = [latency,width,]
       
    else:
       print("shuile")

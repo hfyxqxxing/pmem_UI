@@ -19,7 +19,7 @@
         </div> -->
         <div class="server_info">
             <div class="img">
-                <img src="../static/img/rpma_socket.png"  height="227.6px" style="border:2px solid #3A3F44">
+                <img src="../static/img/rpma_socket_2.png"  height="227.6px" style="border:2px solid #3A3F44">
             </div>
             <div class="tab">
                 <table border="1">
@@ -47,14 +47,14 @@
                         <td class="td_title">NUMA node1 CPU(s)</td>
                         <td class="td_info">{{sys_info.node0}}</td>
                     </tr>
-                    <!-- <tr>
+                    <tr>
                         <td class="td_title">DRAM</td>
                         <td class="td_info">16GB*12</td>
                     </tr>
                     <tr>
                         <td class="td_title">AEP</td>
-                        <td class="td_info">128GB*8</td>
-                    </tr> -->
+                        <td class="td_info">256GB*12</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -65,12 +65,12 @@
                 data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
                 data-animationstep="0"></div>
             <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-bind="gaugeValue: Percent" data-text=null
-                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
+                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#66AA00"
                 data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
                 data-prelabel="Socket0_DRAM" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
                 data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
             <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-bind="gaugeValue: Percent" data-prepend=null
-                data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
+                data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#FE3912"
                 data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="20" data-prelabel="Socket0_AEP"
                 data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
                 data-animationstep="0"></div>
@@ -81,10 +81,27 @@
                 data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div> -->
         </div>
                         
-        <div>
-            <button class="button" style="color:rgb(235, 125, 22);" onclick="select('read_rpma')">Read_RPMA</button>
-            <button onclick="select('write_rpma')" class="button" style="color:rgb(241, 148, 8);" >Write_RPMA</button>
+        <div id="boxx">
+            <div>
+                <label>                  </label>
+            </div>
 
+
+            <div id="anniu">
+                <button id="read" class="button" style="color:rgb(235, 125, 22);" onclick="select('read_rpma')">Read_RPMA</button>
+                <button id="write" onclick="select('write_rpma')" class="button" style="color:rgb(241, 148, 8);" >Write_RPMA</button>
+            </div>
+            
+            <div id="pointer1">
+                <label style="color:#7cb5ec;">Nvme_lat:</label>
+                <label id="nvme_lat">0</label>
+                <label style="color:#90ed7d;">Dram_lat:</label>
+                <label id="dram_lat">0</label>
+                <label style="color:#f7a35c;">Rpma_lat:</label>
+                <label id="rpma_lat">0</label>
+                <label style="color:#f7a35c;">Rpma_threads:</label>
+                <label class="rpma_threads">0</label>
+            </div>            
         </div>
 
         <!-- <div> -->
@@ -102,19 +119,30 @@
             <!-- </form>
             
         </div> -->
+        <div id="charts_2">
+            <!-- <div id="chart_qps_2">               
+            </div> -->
+            <div id="container2"; data-highcharts-chart="1"></div>
+        </div>
+        <div id="boxx2">
+            <div id="pointer1">
+                <label style="color:#7cb5ec;">Nvme_bw:</label>
+                <label id="nvme_bw">0</label>
+                <label style="color:#90ed7d;">Dram_bw:</label>
+                <label id="dram_bw">0</label>
+                <label style="color:#f7a35c;">Rpma_bw:</label>
+                <label id="rpma_bw">0</label>
+                <label style="color:#f7a35c;">Rpma_threads:</label>
+                <label class="rpma_threads">0</label>
+            </div>
+        </div>
 
 
         <div id="charts">
-            <div id="chart_qps">               
-            </div>
+            <!-- <div id="chart_qps">               
+            </div> -->
+            <!-- <div id="pointer1">cool:}</div> -->
             <div id="container"; data-highcharts-chart="0"></div>
-        </div>
-
-        
-        <div id="charts_2">
-            <div id="chart_qps_2">               
-            </div>
-            <div id="container2"; data-highcharts-chart="1"></div>
         </div>
 
 

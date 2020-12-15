@@ -1,21 +1,21 @@
-client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_client, iodepth=8
+client: (g=0): rw=read, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=librpma_client, iodepth=5
 ...
 fio-3.23-168-gb7dc2
 Starting 2 threads
 
-client: (groupid=0, jobs=2): err= 0: pid=1830849: Sun Dec 13 03:31:52 2020
-  read: IOPS=638k, BW=2493MiB/s (2615MB/s)(7480MiB/3000msec)
-     lat (nsec): min=2608, max=107749, avg=3001.85, stdev=266.18
+client: (groupid=0, jobs=2): err= 0: pid=471783: Tue Dec 15 06:09:10 2020
+  read: IOPS=640k, BW=2498MiB/s (2620MB/s)(7495MiB/3000msec)
+     lat (nsec): min=2614, max=117114, avg=2994.04, stdev=317.80
     lat percentiles (nsec):
-     | 99.900th=[ 4960], 99.990th=[12224], 99.999th=[19072]
-   bw (  MiB/s): min= 2489, max= 2504, per=100.00%, avg=2495.97, stdev= 3.23, samples=10
-   iops        : min=637202, max=641062, avg=638968.80, stdev=827.26, samples=10
-  cpu          : usr=99.75%, sys=0.00%, ctx=32, majf=0, minf=30
+     | 99.900th=[ 5024], 99.990th=[17536], 99.999th=[19328]
+   bw (  MiB/s): min= 2477, max= 2510, per=100.00%, avg=2500.70, stdev= 6.15, samples=10
+   iops        : min=634334, max=642582, avg=640178.40, stdev=1574.75, samples=10
+  cpu          : usr=99.73%, sys=0.00%, ctx=6, majf=0, minf=28
   IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
      submit    : 0=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
      complete  : 0=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
-     issued rwts: total=1914932,0,0,0 short=0,0,0,0 dropped=0,0,0,0
-     latency   : target=0, window=0, percentile=100.00%, depth=8
+     issued rwts: total=1918679,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=5
 
 Run status group 0 (all jobs):
-   READ: bw=2493MiB/s (2615MB/s), 2493MiB/s-2493MiB/s (2615MB/s-2615MB/s), io=7480MiB (7844MB), run=3000-3000msec
+   READ: bw=2498MiB/s (2620MB/s), 2498MiB/s-2498MiB/s (2620MB/s-2620MB/s), io=7495MiB (7859MB), run=3000-3000msec

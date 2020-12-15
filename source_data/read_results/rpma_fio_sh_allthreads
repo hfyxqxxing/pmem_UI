@@ -1,9 +1,9 @@
 client_conf_path="/home/xiaoran/fio/examples/librpma-client.fio"
 server_conf_path="/home/xiaoran/fio/examples/librpma-server.fio"
-path="/home/xiaoran/fio/examples/write_results/"
+path="/home/xiaoran/fio/examples/read_results/"
 
 server_host="10.239.85.78"
-threads=(1 4 8 12 16 18 18 18 18 18 18 18 18 18)
+threads=(1 2 4 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40)
 #threads=( 8 16 22 28 32 48) 
 #threads=(22 24 26 28 30 32 34 36 38 40 42 44 46)
 #threads=(28 30 32 34 36 38 40 42 44 46 48)
@@ -11,7 +11,6 @@ depth=( 2 4 6 8 10 16 24 32 48)
 
 i=0
 str=''
-
 while true
 do
     for td in `echo ${threads[*]}`
@@ -28,7 +27,7 @@ do
         echo "------------------------>threads:${td}"
         ssh ${server_host}  numjobs=${td} sync=1 fio ${server_conf_path} > ${path}"server_"${td}".log" &
         sleep 2
-        numjobs=${td} depth=8 sync=1 mode=write numactl -N 0  fio ${client_conf_path} > ${path}"client_"${td}".log" &
+        numjobs=${td} depth=5 sync=1 mode=read numactl -N 0  fio ${client_conf_path} > ${path}"client_"${td}".log" &
         finish_flag=`tail -2 ${path}client_${td}.log | head -1`
         flag=${finish_flag:0:10}
         echo ${flag}

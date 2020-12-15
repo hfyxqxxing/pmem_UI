@@ -132,8 +132,8 @@ def AD_Mode_Capacity(mode):
     node_free.append(" ")
 
     # 从每次的fio获取？？？
-   #  node_used.append(float(cpu_usage))
-    node_used.append(float(0))
+    node_used.append(float(cpu_usage))
+   #  node_used.append(float(0))
 
     
     print(os.popen("numactl -H|grep 'node size'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read())

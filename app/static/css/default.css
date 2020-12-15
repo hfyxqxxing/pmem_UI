@@ -165,6 +165,23 @@ a:hover,a:focus{color:#74777b;}
 
 }	 */
 
+#boxx{
+	display: flex;
+	/* flex-wrap: wrap; */
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#boxx2{
+	display: flex;
+	justify-content: flex-end;
+}
+
+#anniu{
+	align-self: center;
+	position: relative;
+}
+
 
 .button{
 	margin: 1px 1px;
@@ -173,13 +190,113 @@ a:hover,a:focus{color:#74777b;}
 	position: relative;
 	/* left: 500px; */
 	margin-right: 30px;
-	margin-top: 5px;
-	text-align: right;
+	/* margin-top: 5px; */
+	/* text-align: right; */
 	font-size: 16px;
+	/* float: none; */
+	/* clear:both; */
 	/* position: absolute;
 	right: 200px;
 	bottom: 50px; */
 }
+
+#dram_bw{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #90ed7d;
+	text-align: left;
+	display: inline-block;
+}
+#dram_lat{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #90ed7d;
+	text-align: left;
+	display: inline-block;
+}
+#nvme_bw{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #7cb5ec;
+	text-align: left;
+	display: inline-block;
+}
+
+#rpma_bw{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #f7a35c;
+	text-align: left;
+	display: inline-block;
+}
+#rpma_lat{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #f7a35c;
+	text-align: left;
+	display: inline-block;
+}
+#nvme_lat{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #7cb5ec;
+	text-align: left;
+	display: inline-block;
+}
+
+#nvme_bw{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #7cb5ec;
+	text-align: left;
+	display: inline-block;
+}
+
+.rpma_threads{
+	border: 1px Solid #3A3F44;
+	width: 100px;
+	margin-left: 5px;
+	font-size: 20px;
+	position: relative;
+	color: #f7a35c;
+	text-align: left;
+	display: inline-block;
+}
+
+
+#pointer1{
+	/* margin-right: 100px; */
+	align-self: flex-end;
+	border: 1px Solid #3A3F44;
+	/* width: 30px; */
+	margin-right: 30px;
+	font-size: 20px;
+	/* position: relative; */
+	color: #BBBBBB;
+	/* float: right; */
+}
+
 
 #chart_qps{
     font-family: "Microsoft YaHei","宋体","Segoe UI", "Lucida Grande", Helvetica, Arial,sans-serif, FreeSans, Arimo;
