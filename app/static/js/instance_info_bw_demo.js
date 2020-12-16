@@ -382,6 +382,7 @@ function qps_chart_2() {
             // backgroundColor: 'rgba(0,0,0,0)',
             animation: Highcharts.svg, // don't animate in old IE
             marginRight: 10,
+            marginLeft: 100,
             style:{
                 float:"right"
             }
@@ -424,6 +425,8 @@ function qps_chart_2() {
             }
         },
         yAxis: {
+            type:"logarithmic",
+            floor:0,
             title: {
                 text: 'Latency (usec)',
                 style: {
@@ -504,6 +507,7 @@ function qps_chart() {
             backgroundColor: '#272B30',
             animation: Highcharts.svg, // don't animate in old IE
             marginRight: 10,
+            marginLeft: 100,
             // events: {
             //     load: function () {
             //         // set up the updating of the chart each second
@@ -780,7 +784,12 @@ function loadIn(){
                     $("#dram_bw").text(data[names[mode]][1])
                     $("#rpma_bw").text(data[mode][1])
                     $("#dram_lat").text(data[names[mode]][0])
-                    $("#rpma_lat").text(data[mode][0])
+                    if (data[mode][0] == 1){
+                        $("#rpma_lat").text(0)
+                    }
+                    else{
+                        $("#rpma_lat").text(data[mode][0])                        
+                    }
                     $('#nvme_lat').text(nvme_data[mode][0])
                     $('#nvme_bw').text(nvme_data[mode][1])
                     $('.rpma_threads').text(data[mode][2])

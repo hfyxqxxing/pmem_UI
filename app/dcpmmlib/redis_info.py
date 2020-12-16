@@ -190,7 +190,7 @@ def get_data_new (mode,click_rdma,mode_rdma):
       value[mode_rdma]=get_data_write_rdma(click_rdma)
    else:
       #default的时候rdma别读了。
-      value = {"default":[0,0]}
+      value = {"default":[0.01,0]}
    
    #有变化的rdma线
    # if (value[mode] == [0,0] and mode != "default"):
@@ -206,7 +206,7 @@ def get_data_read_rpma():
    name = "result.log"
    # print(name)
    path="/home/xiaoran/fio/examples/read_results/"
-   value_one = {"read_rpma":[0,0,0]}
+   value_one = {"read_rpma":[1,0,0]}
 
    if (os.path.exists(path+name)):
 
@@ -271,7 +271,7 @@ def get_data_write_rpma():
 
    name = "result.log"
    # print(name)
-   value_one = {"write_rpma":[0,0,0]}
+   value_one = {"write_rpma":[1,0,0]}
    path="/home/xiaoran/fio/examples/write_results/"
 
 

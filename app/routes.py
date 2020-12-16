@@ -301,24 +301,24 @@ def load_redis():
     
 
 # 先不用
-@app.route('/redis_info_rdma')
-def load_redis_rdma():
-    click = session['click_rdma']
-    mode = session['mode_rdma']
-    print("click_rdma: ",click)
-    print("show mode rdma: ",mode)
-    if (click > 20 ):
-        session['click_rdma'] = 20
-    if click == 0:
-        time.sleep(3)
-    result = get_data_rdma(click,mode)
-    redis = jsonify(result)
-    if (len(result) != 0):
-        print(len(result))
-        session['click_rdma'] +=1
-    else:
-        pass
-    return redis;
+# @app.route('/redis_info_rdma')
+# def load_redis_rdma():
+#     click = session['click_rdma']
+#     mode = session['mode_rdma']
+#     print("click_rdma: ",click)
+#     print("show mode rdma: ",mode)
+#     if (click > 20 ):
+#         session['click_rdma'] = 20
+#     if click == 0:
+#         time.sleep(3)
+#     result = get_data_rdma(click,mode)
+#     redis = jsonify(result)
+#     if (len(result) != 0):
+#         print(len(result))
+#         session['click_rdma'] +=1
+#     else:
+#         pass
+#     return redis;
 
 
 
