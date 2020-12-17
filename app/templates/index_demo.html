@@ -1,226 +1,229 @@
 <!doctype html>
 <html lang="zh">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intel's AEP observing system</title>
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="../static/css/default.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
-</head>
 
-<body>
-    <header id="Header">
-       <div class="htmleaf-header">
-            <h1>RPMA</h1>
-        </div>
-        <div id="setup">
-            <div class="server_info">
-                <div class="tab">
-                    <table border="1">
-                        <tr>
-                            <td class="td_title">CPU Processor</td>
-                            <td class="td_info">Cascade Lake</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">CPU(s)</td>
-                            <td class="td_info">96</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Socket(s)</td>
-                            <td class="td_info">2</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Thread(s) per core</td>
-                            <td class="td_info">2</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Core(s) per socket</td>
-                            <td class="td_info">24</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">OS system</td>
-                            <td class="td_info">Fedora 30</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Kernel</td>
-                            <td class="td_info">5.4.14</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">DRAM</td>
-                            <td class="td_info">32GB*12</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">NVME SSD</td>
-                            <td class="td_info">1.6T*16</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="img">
-                    <img src="../static/img/NVMe_1.png" width=500px height=440px style="border:2px solid #3A3F44">
-                </div>
-            </div>
-            <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
-            data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
-            data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="20" data-prelabel="CPU_0 Usage"
-            data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
-            data-animationstep="0">
-            </div>
-            <div class="server_info">
-                <div class="img">
-                    <img src="../static/img/RPMA_1.png"  width=500px height=440px style="border:2px solid #3A3F44">
-                </div>
-                <div class="tab">
-                    <table border="1">
-                        <tr>
-                            <td class="td_title">CPU Processor</td>
-                            <td class="td_info">Cascade Lake</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">CPU(s)</td>
-                            <td class="td_info">{{sys_info.cpu}}</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Socket(s)</td>
-                            <td class="td_info">{{sys_info.sockets}}</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Thread(s) per core</td>
-                            <td class="td_info">{{sys_info.threads}}</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Core(s) per socket</td>
-                            <td class="td_info">{{sys_info.cores}}</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">OS system</td>
-                            <td class="td_info">Fedora 31</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">Kernel</td>
-                            <td class="td_info">5.3.7</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">DRAM</td>
-                            <td class="td_info">16GB*12</td>
-                        </tr>
-                        <tr>
-                            <td class="td_title">AEP</td>
-                            <td class="td_info">256GB*12</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+<div style="height: 2500px;">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Intel's AEP observing system</title>
+        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="../static/css/default.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    </head>
 
-        </div>
-    
-
-        <!-- <div class="Preview">
-            <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
+    <body>
+        <header id="Header">
+        <div class="htmleaf-header">
+                <h1>Remote Persistent Memory Access</h1>
+            </div>
+            <div id="setup">
+                <div class="server_info">
+                    <div class="tab">
+                        <table border="1">
+                            <tr>
+                                <td class="td_title">CPU Processor</td>
+                                <td class="td_info">Cascade Lake</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">CPU(s)</td>
+                                <td class="td_info">96</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Socket(s)</td>
+                                <td class="td_info">2</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Thread(s) per core</td>
+                                <td class="td_info">2</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Core(s) per socket</td>
+                                <td class="td_info">24</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">OS system</td>
+                                <td class="td_info">Fedora 30</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Kernel</td>
+                                <td class="td_info">5.4.14</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">DRAM</td>
+                                <td class="td_info">32GB*12</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">NVMe SSD</td>
+                                <td class="td_info">1.6T*16</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="img">
+                        <img src="../static/img/NVMe_1.png" width=500px height=440px style="border:2px solid #3A3F44">
+                    </div>
+                </div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
                 data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
-                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="CPU_0 Usage"
+                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="20" data-prelabel="CPU_0 Usage"
                 data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
-                data-animationstep="0"></div>
-            <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-bind="gaugeValue: Percent" data-text=null
-                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#66AA00"
-                data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
-                data-prelabel="Socket0_DRAM" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
-                data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
-             <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-bind="gaugeValue: Percent" data-prepend=null
-                data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#FE3912"
-                data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="20" data-prelabel="Socket0_AEP"
-                data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
-                data-animationstep="0"></div> -->
-            <!-- <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-bind="gaugeValue: Percent" data-text=null
-                data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
-                data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
-                data-prelabel="Socket1_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
-                data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div> -->
-        <!-- </div> -->
-                        
-        <div id="boxx">
+                data-animationstep="0">
+                </div>
+                <div class="server_info">
+                    <div class="img">
+                        <img src="../static/img/RPMA_1.png"  width=500px height=440px style="border:2px solid #3A3F44">
+                    </div>
+                    <div class="tab">
+                        <table border="1">
+                            <tr>
+                                <td class="td_title">CPU Processor</td>
+                                <td class="td_info">Cascade Lake</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">CPU(s)</td>
+                                <td class="td_info">{{sys_info.cpu}}</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Socket(s)</td>
+                                <td class="td_info">{{sys_info.sockets}}</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Thread(s) per core</td>
+                                <td class="td_info">{{sys_info.threads}}</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Core(s) per socket</td>
+                                <td class="td_info">{{sys_info.cores}}</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">OS system</td>
+                                <td class="td_info">Fedora 31</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">Kernel</td>
+                                <td class="td_info">5.3.7</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">DRAM</td>
+                                <td class="td_info">16GB*12</td>
+                            </tr>
+                            <tr>
+                                <td class="td_title">AEP</td>
+                                <td class="td_info">256GB*12</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        
+
+            <!-- <div class="Preview">
+                <div class="GaugeMeter" id="PreviewGaugeMeter_0" data-bind="gaugeValue: Percent" data-prepend=null
+                    data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#66AA00"
+                    data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="6" data-prelabel="CPU_0 Usage"
+                    data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
+                    data-animationstep="0"></div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_1" data-bind="gaugeValue: Percent" data-text=null
+                    data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#66AA00"
+                    data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
+                    data-prelabel="Socket0_DRAM" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
+                    data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div>
+                <div class="GaugeMeter" id="PreviewGaugeMeter_2" data-bind="gaugeValue: Percent" data-prepend=null
+                    data-append="%" data-size="256" data-theme="White" data-back="#373B40" data-color="#FE3912"
+                    data-animate_gauge_colors="1" data-animate_text_colors="1" data-width="20" data-prelabel="Socket0_AEP"
+                    data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB" data-postlabel_color="#BBBBBB"
+                    data-animationstep="0"></div> -->
+                <!-- <div class="GaugeMeter" id="PreviewGaugeMeter_3" data-bind="gaugeValue: Percent" data-text=null
+                    data-prepend=null data-append="%" data-size="256" data-width="20" data-style=null data-color="#FE3912"
+                    data-back="#373B40" data-theme=null data-animate_gauge_colors=null data-animate_text_colors=null
+                    data-prelabel="Socket1_AEP" data-prelabel_color="#BBBBBB" data-label_color="#BBBBBB"
+                    data-postlabel_color="#BBBBBB" data-stripe=null data-animationstep="0"></div> -->
+            <!-- </div> -->
+                            
+            <div id="boxx">
+                <!-- <div>
+                    <label>                  </label>
+                </div>
+    -->
+
+                <div id="anniu">
+                    <button id="read" class="button" style="color:rgb(235, 125, 22);" onclick="select('read_rpma')">Read_RPMA</button>
+                    <button id="write" onclick="select('write_rpma')" class="button" style="color:rgb(241, 148, 8);" >Write_RPMA</button>
+                </div>
+                
+                <div id="pointer1">
+                    <label style="color:#7cb5ec;">NVMe_lat(usec): </label>
+                    <label id="nvme_lat">0</label>
+                    <label style="color:#90ed7d;">DRAM_lat(usec): </label>
+                    <label id="dram_lat">0</label>
+                    <label style="color:#f7a35c;">RPMA_lat(usec): </label>
+                    <label id="rpma_lat">0</label>
+                    <label style="color:#f7a35c;">RPMA_Threads:</label>
+                    <label class="rpma_threads">0</label>
+                </div>            
+            </div>
+
+            <!-- <div> -->
+                <!-- <button2 class="button2" name="moderrr" type ="submit" value="read_rpma">Try</button2> -->
+                <!-- <button id="read" class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button>
+                <button id="write" class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button>
+            </div> -->
+
             <!-- <div>
-                <label>                  </label>
-            </div>
- -->
+                <form action="/selection"  method="POST"> -->
+                    <!-- <button id="read" class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button> -->
+                    <!-- <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button> -->
 
-            <div id="anniu">
-                <button id="read" class="button" style="color:rgb(235, 125, 22);" onclick="select('read_rpma')">Read_RPMA</button>
-                <button id="write" onclick="select('write_rpma')" class="button" style="color:rgb(241, 148, 8);" >Write_RPMA</button>
-            </div>
-            
-            <div id="pointer1">
-                <label style="color:#7cb5ec;">Nvme_lat:</label>
-                <label id="nvme_lat">0</label>
-                <label style="color:#90ed7d;">Dram_lat:</label>
-                <label id="dram_lat">0</label>
-                <label style="color:#f7a35c;">Rpma_lat:</label>
-                <label id="rpma_lat">0</label>
-                <label style="color:#f7a35c;">Rpma_threads:</label>
-                <label class="rpma_threads">0</label>
-            </div>            
-        </div>
-
-        <!-- <div> -->
-            <!-- <button2 class="button2" name="moderrr" type ="submit" value="read_rpma">Try</button2> -->
-            <!-- <button id="read" class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button>
-            <button id="write" class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button>
-        </div> -->
-
-        <!-- <div>
-            <form action="/selection"  method="POST"> -->
-                <!-- <button id="read" class="button" name="mode" type ="submit" value="read_rpma">Read_RPMA</button> -->
-                <!-- <button class="button" style="color: #90ed7d;"  name="mode" type ="submit" value="write_rpma">Write_RPMA</button> -->
-
-                <!-- <button class="button" style="color: #f15c80;"  name="mode" type ="submit" value="rdma">RDMA</button> -->
-            <!-- </form>
-            
-        </div> -->
-        <div id="charts_2" style="height: 32%;">
-            <!-- <div id="chart_qps_2">               
+                    <!-- <button class="button" style="color: #f15c80;"  name="mode" type ="submit" value="rdma">RDMA</button> -->
+                <!-- </form>
+                
             </div> -->
-            <div id="container2"; data-highcharts-chart="1"></div>
-        </div>
-        <div id="boxx2">
-            <div id="pointer1">
-                <label style="color:#7cb5ec;">Nvme_bw:</label>
-                <label id="nvme_bw">0</label>
-                <label style="color:#90ed7d;">Dram_bw:</label>
-                <label id="dram_bw">0</label>
-                <label style="color:#f7a35c;">Rpma_bw:</label>
-                <label id="rpma_bw">0</label>
-                <label style="color:#f7a35c;">Rpma_threads:</label>
-                <label class="rpma_threads">0</label>
+            <div id="charts_2">
+                <!-- <div id="chart_qps_2">               
+                </div> -->
+                <div id="container2"; data-highcharts-chart="1"></div>
             </div>
-        </div>
+            <div id="boxx2">
+                <div id="pointer1">
+                    <label style="color:#7cb5ec;">NVMe_bw(GiB/s): </label>
+                    <label id="nvme_bw">0</label>
+                    <label style="color:#90ed7d;">DRAM_bw(GiB/s): </label>
+                    <label id="dram_bw">0</label>
+                    <label style="color:#f7a35c;">RPMA_bw(GiB/s): </label>
+                    <label id="rpma_bw">0</label>
+                    <label style="color:#f7a35c;">RPMA_Threads:</label>
+                    <label class="rpma_threads">0</label>
+                </div>
+            </div>
 
 
-        <div id="charts" style="height: 32%;">
-            <!-- <div id="chart_qps">               
-            </div> -->
-            <!-- <div id="pointer1">cool:}</div> -->
-            <div id="container"; data-highcharts-chart="0"></div>
-        </div>
+            <div id="charts">
+                <!-- <div id="chart_qps">               
+                </div> -->
+                <!-- <div id="pointer1">cool:}</div> -->
+                <div id="container"; data-highcharts-chart="0"></div>
+            </div>
 
 
-    </header>
+        </header>
 
 
-    <script src="../static/js/jquery-2.1.1.min.js"></script>
-    <script src="../static/js/GaugeMeter.js"></script>
-    <script src="../static/js/highcharts.js"></script>
-    <!-- 下载到本地 -->
-    <script src="../static/js/exporting.js"></script>
-    <script src="../static/js/export-data.js"></script>
-    <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
-    <script src="../static/js/instance_info_bw_demo.js"></script>
-    <!-- <script src="../static/js/instanceinfo_backup.js"></script> -->
-    <script type="text/javascript">
-        </script>
-</body>
+        <script src="../static/js/jquery-2.1.1.min.js"></script>
+        <script src="../static/js/GaugeMeter.js"></script>
+        <script src="../static/js/highcharts.js"></script>
+        <!-- 下载到本地 -->
+        <script src="../static/js/exporting.js"></script>
+        <script src="../static/js/export-data.js"></script>
+        <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script> -->
+        <script src="../static/js/instance_info_bw_demo.js"></script>
+        <!-- <script src="../static/js/instanceinfo_backup.js"></script> -->
+        <script type="text/javascript">
+            </script>
+    </body>
+</div>
 
 </html>

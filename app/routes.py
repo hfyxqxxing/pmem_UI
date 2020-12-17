@@ -157,9 +157,10 @@ def clear_again():
     os.system("killall -9 run.sh")
 
     # if (mode_name == "")
+    if (mode_name != "default"):
+        thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/examples/'+file_names[mode_name]+'/./run.sh',))
+        thread.start()  
 
-    thread = threading.Thread(target=os.system,args=('/home/xiaoran/fio/examples/'+file_names[mode_name]+'/./run.sh',))
-    thread.start()
     session['time']=time.time()
 
 

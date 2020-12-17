@@ -3,9 +3,9 @@ fio-3.23-152-g80490
 Starting 1 thread
 server: Laying out IO file (1 file / 95MiB)
 
-server: (groupid=0, jobs=1): err= 0: pid=1206146: Tue Dec 15 16:28:29 2020
-  read: IOPS=0, BW=3062KiB/s (3136kB/s)(13.5MiB/4526msec)
-  cpu          : usr=0.04%, sys=1.13%, ctx=443, majf=0, minf=858
+server: (groupid=0, jobs=1): err= 0: pid=1712598: Thu Dec 17 15:45:18 2020
+  read: IOPS=0, BW=3946KiB/s (4041kB/s)(13.5MiB/3512msec)
+  cpu          : usr=0.00%, sys=1.48%, ctx=441, majf=0, minf=858
   IO depths    : 1=100.0%, 2=0.0%, 4=0.0%, 8=0.0%, 16=0.0%, 32=0.0%, >=64=0.0%
      submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
      complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
@@ -13,8 +13,8 @@ server: (groupid=0, jobs=1): err= 0: pid=1206146: Tue Dec 15 16:28:29 2020
      latency   : target=0, window=0, percentile=100.00%, depth=16
 
 Run status group 0 (all jobs):
-   READ: bw=3062KiB/s (3136kB/s), 3062KiB/s-3062KiB/s (3136kB/s-3136kB/s), io=13.5MiB (14.2MB), run=4526-4526msec
+   READ: bw=3946KiB/s (4041kB/s), 3946KiB/s-3946KiB/s (4041kB/s-4041kB/s), io=13.5MiB (14.2MB), run=3512-3512msec
 
 Disk stats (read/write):
-    dm-1: ios=0/1082, merge=0/0, ticks=0/1674, in_queue=1674, util=2.13%, aggrios=0/1077, aggrmerge=0/5, aggrticks=0/1627, aggrin_queue=1226, aggrutil=2.06%
-  nvme1n1: ios=0/1077, merge=0/5, ticks=0/1627, in_queue=1226, util=2.06%
+    dm-1: ios=0/776, merge=0/0, ticks=0/1806, in_queue=1806, util=2.51%, aggrios=0/776, aggrmerge=0/0, aggrticks=0/1704, aggrin_queue=1357, aggrutil=2.43%
+  nvme1n1: ios=0/776, merge=0/0, ticks=0/1704, in_queue=1357, util=2.43%

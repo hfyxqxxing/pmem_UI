@@ -1,0 +1,23 @@
+# Example of the librpma server job
+
+# The engine requires some options to work correctly:
+# - thread XXX some initiation steps are synchronized between threads
+# - create_serialize=0 forces specific initiation sequence
+
+[global]
+ioengine=librpma_server
+bindname=192.168.0.1
+port=996
+thread
+
+# The server side spawns a single thread, opens and registers the whole
+# provided memory. The server accepts a connection, waits for it to end up,
+# and closes itself.
+
+[server]
+sync=${sync}
+create_serialize=0
+iomem_align=4096
+num_conns=${numjobs}
+size=100MiB
+mem=mmap:/dev/dax0.0 # [device dax or an existing fsdax file]

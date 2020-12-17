@@ -142,23 +142,23 @@ function memory() {
                 });
 
                 //dram
-                var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
-                b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
-                b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
-                    2) + "G"
-                $("#PreviewGaugeMeter_" + 1).gaugeMeter({
-                    percent: data[2][1]
-                });
+                // var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
+                // b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
+                // b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
+                //     2) + "G"
+                // $("#PreviewGaugeMeter_" + 1).gaugeMeter({
+                //     percent: data[2][1]
+                // });
 
 
-                //aep
-                var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
-                b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
-                b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
-                    2) + "G"
-                $("#PreviewGaugeMeter_" + 2).gaugeMeter({
-                    percent: data[2][2]
-                });
+                // //aep
+                // var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
+                // b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
+                // b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
+                //     2) + "G"
+                // $("#PreviewGaugeMeter_" + 2).gaugeMeter({
+                //     percent: data[2][2]
+                // });
 
 
             }
@@ -383,9 +383,9 @@ function qps_chart_2() {
             animation: Highcharts.svg, // don't animate in old IE
             marginRight: 10,
             marginLeft: 100,
-            style:{
-                float:"right"
-            }
+            // style:{
+            //     height:"425px"
+            // }
         },
         credits: {
             enabled: false
