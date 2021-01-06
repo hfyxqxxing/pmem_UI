@@ -3,6 +3,11 @@ import os
 import time
 import threading
 
+
+'''
+本文件用来测试小部分功能，比如从文件读取数值，检测命令行是否正常运行。
+'''
+
 # path="/home/xiaoran/fio/test_results/"
 
 # a = [1,2,4,6,8]

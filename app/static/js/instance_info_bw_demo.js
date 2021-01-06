@@ -4,18 +4,9 @@ var timesrun = 0
 var chart_bw
 var chart_lat
 var loading = null
-
+var tt = null;
 
 $(document).ready(function () {
-    // $.ajax({
-    //     url: "/flush",
-    //     async: false,
-    //     success: function(data){
-    //         console.log("flush")
-    //         console.log(mode);
-            
-    //     }
-    // });
 
     $.ajax({
             url:"/moding",
@@ -25,6 +16,7 @@ $(document).ready(function () {
         })
 
     console.log("reall change", mode)
+
 
     //GaugeMeter
     $(".GaugeMeter").gaugeMeter();
@@ -102,66 +94,35 @@ function memory() {
             } else {
                 memory_num = 2;
             }
-            if (mode == "Numa_Node") {
-                var b = document.getElementById("PreviewGaugeMeter_" + 0).getElementsByTagName("b");
-                b[1].innerText = "total:" + (data[0][0] / 1024).toFixed(2) + "G"
-                b[2].innerText = "used:" + ((data[0][0] - data[1][0]) / 1024).toFixed(
-                    2) + "G"
-                $("#PreviewGaugeMeter_" + 0).gaugeMeter({
-                    percent: data[2][0]
-                });
-                var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
-                b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
-                b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
-                    2) + "G"
-                $("#PreviewGaugeMeter_" + 1).gaugeMeter({
-                    percent: data[2][2]
-                });
-                var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
-                b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
-                b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
-                    2) + "G"
-                $("#PreviewGaugeMeter_" + 2).gaugeMeter({
-                    percent: data[2][1]
-                });
-                var b = document.getElementById("PreviewGaugeMeter_" + 3).getElementsByTagName("b");
-                b[1].innerText = "total:" + (data[0][3] / 1024).toFixed(2) + "G"
-                b[2].innerText = "used:" + ((data[0][3] - data[1][3]) / 1024).toFixed(
-                    2) + "G"
-                $("#PreviewGaugeMeter_" + 3).gaugeMeter({
-                    percent: data[2][3]
-                });
-            } else {
-                console.log("reach hereeee")
-                //cpu
-                var b = document.getElementById("PreviewGaugeMeter_" + 0).getElementsByTagName("b");
-                b[1].innerText = data[0][0]
-                b[2].innerText = " "
-                $("#PreviewGaugeMeter_" + 0).gaugeMeter({
-                    percent: data[2][0]
-                });
 
-                //dram
-                // var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
-                // b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
-                // b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
-                //     2) + "G"
-                // $("#PreviewGaugeMeter_" + 1).gaugeMeter({
-                //     percent: data[2][1]
-                // });
+            console.log("reach hereeee")
+            //cpu
+            var b = document.getElementById("PreviewGaugeMeter_" + 0).getElementsByTagName("b");
+            b[1].innerText = data[0][0]
+            b[2].innerText = " "
+            $("#PreviewGaugeMeter_" + 0).gaugeMeter({
+                percent: data[2][0]
+            });
+
+            //dram
+            // var b = document.getElementById("PreviewGaugeMeter_" + 1).getElementsByTagName("b");
+            // b[1].innerText = "total:" + (data[0][1] / 1024).toFixed(2) + "G"
+            // b[2].innerText = "used:" + ((data[0][1] - data[1][1]) / 1024).toFixed(
+            //     2) + "G"
+            // $("#PreviewGaugeMeter_" + 1).gaugeMeter({
+            //     percent: data[2][1]
+            // });
 
 
-                // //aep
-                // var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
-                // b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
-                // b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
-                //     2) + "G"
-                // $("#PreviewGaugeMeter_" + 2).gaugeMeter({
-                //     percent: data[2][2]
-                // });
+            // //aep
+            // var b = document.getElementById("PreviewGaugeMeter_" + 2).getElementsByTagName("b");
+            // b[1].innerText = "total:" + (data[0][2] / 1024).toFixed(2) + "G"
+            // b[2].innerText = "used:" + ((data[0][2] - data[1][2]) / 1024).toFixed(
+            //     2) + "G"
+            // $("#PreviewGaugeMeter_" + 2).gaugeMeter({
+            //     percent: data[2][2]
+            // });
 
-
-            }
         }
     });
 }
@@ -183,14 +144,13 @@ function createdata() {
     "write_rdma":"#90ed7d"}
 
 
-    //nvme #7cb5ec
 
     console.log(mode)
     var data = [];
     var time = (new Date()).getTime();
     var t = time;
 
-    // 非重绘的建立初始坐标
+    // 建立初始坐标
     var y0 = undefined;
     for (i = 0; i<3 ; i++){
         data.push({
@@ -200,7 +160,6 @@ function createdata() {
 
     }
 
-    //重绘建立多个坐标
 
     console.log("here")
     console.log(data);
@@ -208,11 +167,13 @@ function createdata() {
     seriesdata.push(data);
     var seriesdatas = JSON.parse(JSON.stringify(seriesdata)) //deep copy
     console.log(seriesdatas)
-    // m = 0,1,2,3
-    // for (m = 0; m < seriesdatas[0].length; m++) {
+
+
+
+    // 版本需要，每次建立三条线，需要三个instance_data. 可以通过再写函数进行区分。
     var instance_data = [];
     var temp = []
-    // n = 0
+
     for (var n = 0; n < seriesdatas.length; n++) {
         temp.push(seriesdatas[n][0]);
     }
@@ -222,10 +183,9 @@ function createdata() {
     instance_data["name"] = mode;
     instance_data["data"] = temp;
     instance_data["color"] = colors[mode]
-    // instance_data["symbol"] = "none";
-    // instance_data.data['marker']={"enabled":false}
     var instance_data2 = [];
     var instance_data3 = [];
+
     if (mode != "default"){
         
         var temp2 = []
@@ -241,7 +201,7 @@ function createdata() {
         instance_data2["dashStyle"] = "longdash";
         instance_data2["color"] = colors[names[mode]]
         //一个instance_data是一条线的东西\
-        //这里是顺序没对上的罪魁祸首，要改，在这里改
+
 
         var temp3 = []
         // n = 0
@@ -260,6 +220,8 @@ function createdata() {
         series.push(instance_data2);
     }
     series.push(instance_data);
+    //push 的顺序影响series里的顺序，删除后重新添加的时候会影响调用
+
     console.log("111,",series)
     // }
     if (series.length!=0) {
@@ -271,104 +233,124 @@ function createdata() {
 
 }
 
-function createdata2() {
-
-    // 通过mode判断数据线名称，格子都是一个。
-    var series = new Array();
-    var seriesdata = new Array();
-    var rpma_moddes=["read_rpma","write_rpma"]
-
-    
-    var names = {"read_rpma":"read_rdma",
-    "write_rpma":"write_rdma",}
 
 
-    var colors = {"read_rpma":"#f7a35c","write_rpma":"#f7a35c","default":"#808080",
-    "read_rdma":"#90ed7d",
-    "write_rdma":"#90ed7d"}
-    console.log(mode)
-    var data = [];
-    var time = (new Date()).getTime();
-    var t = time;
-    var y0 = undefined;
-    for (i = 0; i<2 ; i++){
-        data.push({
-            x: t,
-            y: y0
-        });
+// nou used(maybe)
+Highcharts.setOptions({
+    global: {
+        useUTC: false
+    },
+    colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9', 
+    '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'] 
+});
 
-    }
 
-    //重绘建立多个坐标
+// create the "container" chart, the position in the index_demo.html
+function qps_chart() {
+    qps_chart_flag=true; 
 
-    console.log("here")
-    console.log(data);
-    // debugger
-    seriesdata.push(data);
-    var seriesdatas = JSON.parse(JSON.stringify(seriesdata)) //deep copy
-    console.log(seriesdatas)
-    // m = 0,1,2,3
-    // for (m = 0; m < seriesdatas[0].length; m++) {
-    var instance_data = [];
-    var temp = []
-    // n = 0
-    for (var n = 0; n < seriesdatas.length; n++) {
-        temp.push(seriesdatas[n][0]);
-    }
-    console.log("this is ",temp)
-    console.log(mode)
-    console.log(colors[mode])
-    instance_data["name"] = mode;
-    instance_data["data"] = temp;
-    instance_data["color"] = colors[mode]
-    // instance_data["symbol"] = "none";
-    // instance_data.data['marker']={"enabled":false}
-    var instance_data2 = [];
-    var instance_data3 = [];
-    if (mode != "default"){
-        var temp2 = []
-        // n = 0
-        for (var n = 0; n < seriesdatas.length; n++) {
-            temp2.push(seriesdatas[n][1]);
-        }
-        console.log("this is ",temp2)
-        console.log(mode)
-        console.log(colors[mode])
-        instance_data2["name"] = names[mode];
-        instance_data2["data"] = temp2;
-        instance_data2["dashStyle"] = "longdash"
-        // instance_data2["type"] = "do";
-        instance_data2["color"] = colors[names[mode]]
-        //一个instance_data是一条线的东西
-        var temp3 = []
-        // n = 0
-        for (var n = 0; n < seriesdatas.length; n++) {
-            temp3.push(seriesdatas[n][2]);
-        }
-        console.log("this is ",temp3)
-        console.log(mode)
-        console.log(colors[mode])
-        instance_data3["name"] = "nvme";
-        instance_data3["data"] = temp3;
-        instance_data3["dashStyle"] = "longdash";
-        instance_data3["color"] = "#7cb5ec";
+    chart_bw = Highcharts.chart('container', {
+        // 类型，左右缩进
+        chart: {
+            type: 'spline',
+            backgroundColor: '#272B30',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            marginLeft: 100,
+        },
+        credits: {
+            enabled: false
+        },
 
-        series.push(instance_data3);
-        series.push(instance_data2);
-    }
-    series.push(instance_data);
-    console.log("111,",series)
-    // }
-    if (series.length!=0) {
-        return series;
-    } else {
-        return [{}];
-    }
-        
-    
-    
+        time: {
+            useUTC: false
+        },
+
+        title: {
+            text: 'Bind Width (GiB/s)',
+            style: {
+                color: '#808080',
+                fontSize: '20px',
+            }
+        },
+        // 时间类型的x轴坐标， type
+        xAxis: {
+            title: {
+                text: 'Time',
+                style: {
+                    color: '#808080',
+                    fontSize: '20px',
+                },
+            },
+            type: 'datetime',
+            tickPixelInterval: 200,
+            gridLineColor: '#373B40',
+            gridLineWidth: 1,
+            lineColor: '#373B40',
+            labels: {
+                style: {
+                    color: '#808080',
+                    fontSize: '11px',
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'BW (GiB/s)',
+                style: {
+                    color: '#808080',
+                    fontSize: '20px',
+                }
+            },
+            lineColor: '#373B40',
+            lineWidth: 1,
+            gridLineColor: '#373B40',
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }],
+            labels: {
+                style: {
+                    color: '#808080',
+                    fontSize: '11px',
+                }
+            },
+            // y轴的刻度范围
+            tickPositioner: function () {
+                max = (this.dataMax/100+this.dataMax/100)*100+((this.dataMax/100+this.dataMax/100)/4)*100;
+            }
+        },
+        // 鼠标移动浮现的气泡
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br/>',
+            pointFormat: 'Bind Width: {point.y:.2f} GiB/s'
+        },
+
+        legend: {
+            enabled: true,
+            itemStyle: {
+                color: '#808080',
+                fontSize: '20px',
+            }
+        },
+        exporting: {
+            enabled: false
+        },
+        plotOptions:{
+            series:{
+                // 去掉数据线上圆点
+                marker:{
+                    enabled:false
+                }
+            }
+        },
+        series:createdata()
+    });
+
 }
 
+// create the "container2" chart, the position in the index_demo.html
 function qps_chart_2() {
     qps_chart_flag=true;
     qps_interval2=null
@@ -383,9 +365,7 @@ function qps_chart_2() {
             animation: Highcharts.svg, // don't animate in old IE
             marginRight: 10,
             marginLeft: 100,
-            // style:{
-            //     height:"425px"
-            // }
+
         },
         credits: {
             enabled: false
@@ -479,161 +459,16 @@ function qps_chart_2() {
                 }
             }
         },
-        series:createdata2()
-    });
-
-}
-
-
-Highcharts.setOptions({
-    global: {
-        useUTC: false
-    },
-    colors: ['#7cb5ec', '#90ed7d', '#f7a35c', '#8085e9', 
-    '#f15c80', '#e4d354', '#8085e8', '#8d4653', '#91e8e1'] 
-});
-
-
-
-function qps_chart() {
-    qps_chart_flag=true;
-    var qps_interval=null;
-    clearInterval(qps_interval);   
-    var QPS_time = 5000;
-
-    chart_bw = Highcharts.chart('container', {
-        chart: {
-            type: 'spline',
-            backgroundColor: '#272B30',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            marginLeft: 100,
-            // events: {
-            //     load: function () {
-            //         // set up the updating of the chart each second
-            //         var series = this.series
-            //         var loadData = function () {
-            //             $.ajax({
-            //                 url: "/redis_info",
-            //                 async: false,
-            //                 success: function (data) {
-            //                 }
-            //             });
-            //         };
-            //        qps_interval= setInterval(loadData, QPS_time);
-            //     }
-            // }
-        },
-        credits: {
-            enabled: false
-        },
-
-        time: {
-            useUTC: false
-        },
-
-        title: {
-            text: 'Bind Width (GiB/s)',
-            style: {
-                color: '#808080',
-                fontSize: '20px',
-            }
-        },
-
-        xAxis: {
-            title: {
-                text: 'Time',
-                style: {
-                    color: '#808080',
-                    fontSize: '20px',
-                },
-            },
-            type: 'datetime',
-            tickPixelInterval: 200,
-            gridLineColor: '#373B40',
-            gridLineWidth: 1,
-            lineColor: '#373B40',
-            labels: {
-                style: {
-                    color: '#808080',
-                    fontSize: '11px',
-                }
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'BW (GiB/s)',
-                style: {
-                    color: '#808080',
-                    fontSize: '20px',
-                }
-            },
-            lineColor: '#373B40',
-            lineWidth: 1,
-            gridLineColor: '#373B40',
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }],
-            labels: {
-                style: {
-                    color: '#808080',
-                    fontSize: '11px',
-                }
-            },
-            tickPositioner: function () {
-                max = (this.dataMax/100+this.dataMax/100)*100+((this.dataMax/100+this.dataMax/100)/4)*100;
-            }
-        },
-        tooltip: {
-            headerFormat: '<b>{series.name}</b><br/>',
-            pointFormat: 'Bind Width: {point.y:.2f} GiB/s'
-        },
-        legend: {
-            enabled: true,
-            itemStyle: {
-                color: '#808080',
-                fontSize: '20px',
-            }
-        },
-        exporting: {
-            enabled: false
-        },
-        plotOptions:{
-            series:{
-
-                marker:{
-                    enabled:false
-                }
-            }
-        },
         series:createdata()
     });
 
 }
 
 
-// $("#read").click(function(){
-//     $.ajax({
-//         url:"/test_post",
-//         type:"post",
-//         dataType:"json" ,
-//         data:'{"name":"mode","value":"rpma_read"}',
-//         success:function(data){
-//             console.log(data)
-//         }
-//     })
-//     console.log("right")
-//     console.log($("#read").attr('value'))
-// })
-
+// 重置页面
 function fresh(){
     console.log("got me")
     console.log(chart_bw.series);
-    // debugger
-    // chart_bw.series[0]=createdata()
-    // chart_lat.series[0]=createdata2()
     chart_bw.series[0].remove(true);
     chart_lat.series[0].remove(true);
     if (mode != "default"){
@@ -645,7 +480,9 @@ function fresh(){
     }
 
     $("#dram_bw").text(0)
+
     $("#rpma_bw").text(0)
+
     $("#dram_lat").text(0)
     $("#rpma_lat").text(0)
     $('.rpma_threads').text(0)
@@ -664,26 +501,27 @@ function fresh(){
         dataType: "Text",
         success: function(data){mode = data}
     })
-    console.log("creats",createdata())
 
-    //这里需要多次for重复添加series
-    //for
+    $("#name_lat").text(mode+"_lat(usec)")
+    $("#name_th").text(mode+"_threads")
+
+    // 待优化
     chart_bw.addSeries(createdata()[0])
     chart_bw.addSeries(createdata()[1])
     chart_bw.addSeries(createdata()[2])
 
-    //[0],[1]...
     console.log(chart_bw.series)
-    chart_lat.addSeries(createdata2()[0])
+    chart_lat.addSeries(createdata()[0])
     chart_lat.addSeries(createdata2()[1])
     chart_lat.addSeries(createdata2()[2])
+
+    // 定时器需要清除以防前后定时器互相干涉
     clearInterval(loading)
-    // // loadIn();
     loading = setInterval(loadIn,5500);
 }
 
 
-var tt = null;
+//按钮触发
 function select(val){
     console.log(val)
     clearInterval(tt)
@@ -705,14 +543,14 @@ function select(val){
         document.getElementById("write").style.color="rgb(241, 148, 8)"
         document.getElementById("read").style.color="#808080"
     }
-    // var timing = null
+
     
     console.log("reachedededdede")
     fresh()
-    tt = setInterval(fresh,360000)
+    tt = setInterval(fresh,60000)
 }
 
-
+//加入数据点
 function loadIn(){
     // set up the updating of the chart each second
     console.log("got")
@@ -738,13 +576,12 @@ function loadIn(){
                 names = {"read_rpma":"read_rdma","write_rpma":"write_rdma"}
                 if (data.length != 0 && series.length != 0) {   
 
-                    // for (var k = 0; k < series.length; k++) {
-                    console.log("all",data)
-                    console.log(series[0].name)
-                    console.log(data)
-                    console.log(data[0])
-                    console.log(mode)
-                    console.log(data[mode][0])
+                    // console.log("all",data)
+                    // console.log(series[0].name)
+                    // console.log(data)
+                    // console.log(data[0])
+                    // console.log(mode)
+                    // console.log(data[mode][0])
                     
 
                     console.log("what is latency",data[mode][0])
@@ -756,8 +593,6 @@ function loadIn(){
                         //         series[k].data.length -
                         //         1].x
                         // }
-                        //  if (x > lastTime) {
-                        //      //y
                     console.log(series[0].name)
                     nvme_data={"read_rpma":[182.1,11.01],
                             "write_rpma":[85.5,11.49]}
@@ -765,6 +600,7 @@ function loadIn(){
                         series[0].addPoint([x, data[mode][1]], true, false)
                     }
                     else{
+                        series[0].addPoint([x, data[mode][1]], true, false)
                         series[2].addPoint([x, data[mode][1],data[mode][2]], true, false)
                         series[1].addPoint([x,data[names[mode]][1]], true, false)
                         series[0].addPoint([x,nvme_data[mode][1]], true, false)
@@ -774,13 +610,14 @@ function loadIn(){
                         series_2[0].addPoint([x, data[mode][0]], true, false)
                     }
                     else{
+                        series_2[0].addPoint([x, data[mode][0]], true, false)
                         series_2[2].addPoint([x, data[mode][0]], true, false)
                         series_2[1].addPoint([x,data[names[mode]][0]], true, false)
                         series_2[0].addPoint([x,nvme_data[mode][0]], true, false)
                     }
                         //  }
                     
-                    //传不到值，传歪zhi
+
                     $("#dram_bw").text(data[names[mode]][1])
                     $("#rpma_bw").text(data[mode][1])
                     $("#dram_lat").text(data[names[mode]][0])
@@ -794,12 +631,9 @@ function loadIn(){
                     $('#nvme_bw').text(nvme_data[mode][1])
                     $('.rpma_threads').text(data[mode][2])
 
-                    // }
-                    // document.getElementById("chart_qps").innerText = "average_bw: " + (qps / series[0].length).toFixed(2)+"\xa0\xa0\xa0" + "GiB/s";
                 }
             }
 
         }
     });
-//    qps_interval= setInterval(loadData, QPS_time);
 }

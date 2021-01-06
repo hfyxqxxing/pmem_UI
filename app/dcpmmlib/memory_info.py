@@ -1,8 +1,7 @@
 import os, time , re
-#from system_info import Numa_Node_Number
 
 
-
+#获取电脑硬件条件的指令们
 def get_sys_info():
    cpu_numbers = os.popen("lscpu | grep 'CPU(s):' | awk '{print $2} '").readlines()[0].split('\n')[0];
    sockets = os.popen("lscpu | grep 'Socket(s):' | awk '{print $2} '").readlines()[0].split('\n')[0];
@@ -30,11 +29,12 @@ def Numa_Node_Number():
    # print(node_number);
     return node_number;
 
-#names = locals();
+# 确认mode
 def DCPMM_Mode1():
 
    return "AD_Mode"
 
+   # 因为机器条件尚不满足，为了稳妥展示时写死展示的html网页文件
    #  mode=os.popen("ipmctl show -region|tr -d '\n'").read();
    #  time.sleep(0.5)
    #  if mode=="There are no Regions defined in the system.":
@@ -73,7 +73,7 @@ def DCPMM_Capacity(mode_mine):
        else:
           return "1LM";    
 
-
+#not used
 def Memory_Mode_Capacity():
     node_number=Numa_Node_Number();
     node_size=[];
@@ -86,6 +86,7 @@ def Memory_Mode_Capacity():
     return node_size,node_free,node_used
 
 
+#获取的是fio测试里的cpu利用率
 def get_cpu(path):
    if (os.path.exists(path)):
       f = open(path,'r')
@@ -108,49 +109,46 @@ def get_cpu(path):
 
 
 def AD_Mode_Capacity(mode):
-   # 要传click参数打开文件那一套
+   node_number=Numa_Node_Number();
+   node_size=[];
+   node_free=[];
+   node_used=[];
+   paths = {"read_rpma":"read_results",
+   "write_rpma":"write_results","default":"default"}
+   path = "/home/xiaoran/fio/examples/"+paths[mode]+"/result.log"
 
-    a = [1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40]
-    
-    name = "yes"
-   #  number = a[click] 
-    node_number=Numa_Node_Number();
-    node_size=[];
-    node_free=[];
-    node_used=[];
-    paths = {"read_rpma":"read_results",
-    "write_rpma":"write_results","default":"default"}
-    path = "/home/xiaoran/fio/examples/"+paths[mode]+"/result.log"
+   if (mode == "default"):
+      cpu_usage = 0
+      #求稳没使用指令
+      # cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").read()
+   else:
+      cpu_usage = get_cpu(path)
 
-    if (mode == "default"):
-       cpu_usage = 0
-      #  cpu_usage = os.popen("top -n 1 | grep Cpu | awk '{print $2}'").read()
-    else:
-       cpu_usage = get_cpu(path)
+   node_size.append("RPMA used")
+   node_free.append(" ")
 
-    node_size.append("RPMA used")
-    node_free.append(" ")
-
-    # 从每次的fio获取？？？
-    node_used.append(float(cpu_usage))
+   # 从每次的fio获取？？？
+   node_used.append(float(cpu_usage))
    #  node_used.append(float(0))
 
-    
-    print(os.popen("numactl -H|grep 'node size'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read())
-    node_size.append(float(os.popen("numactl -H|grep 'node 0 size'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read().split("MB")[0]));
-    node_free.append(float(os.popen("numactl -H|grep 'node 0 free'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read().split("MB")[0]));
-    print(((node_size[1]-node_free[1])/node_size[1])*100.0)
-    node_used.append(((node_size[1]-node_free[1])/node_size[1])*100.0);
-    # 这里要改 
+   
+   print(os.popen("numactl -H|grep 'node size'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read())
+   node_size.append(float(os.popen("numactl -H|grep 'node 0 size'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read().split("MB")[0]));
+   node_free.append(float(os.popen("numactl -H|grep 'node 0 free'|awk -F ':' '{print $2'}|tr -d '[:space:]'").read().split("MB")[0]));
+   print(((node_size[1]-node_free[1])/node_size[1])*100.0)
+   node_used.append(((node_size[1]-node_free[1])/node_size[1])*100.0);
 
-    node_size.append(float("100"))
-    node_free.append(float("80"))
+
+   ''' 以前版本有pmem占用率的指令和前台展示，此次不需要所以删了，以下内容无用
+   node_size.append(float("100"))
+   node_free.append(float("80"))
    #  node_size.append(float(os.popen("df -hl|grep '/dev/pmem1'|awk -F ' ' '{print $2'}|tr -d '\n'").read().split("G")[0])*1024);
    #  node_free.append(float(os.popen("df -hl|grep '/dev/pmem1'|awk -F ' ' '{print $4'}|tr -d '\n'").read().split("G")[0])*1024);
-    node_used.append(((node_size[2]-node_free[2])/node_size[2])*100.0);
+   node_used.append(((node_size[2]-node_free[2])/node_size[2])*100.0);
+   '''
 
+   return node_size, node_free, node_used
 
-    return node_size, node_free, node_used
 
 def Numa_Node_Capacity():
     node_number=Numa_Node_Number();
